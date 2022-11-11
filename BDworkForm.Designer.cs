@@ -1,6 +1,6 @@
 ﻿namespace Library
 {
-    partial class Form1
+    partial class BDworkForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,15 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabControl1.SuspendLayout();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(210, 13);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(748, 379);
+            this.dataGridView1.TabIndex = 5;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(13, 13);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(187, 551);
+            this.treeView1.TabIndex = 4;
+            this.treeView1.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeSelect);
             // 
             // tabControl1
             // 
@@ -47,7 +67,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(756, 166);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
             // 
@@ -69,23 +89,6 @@
             this.tabPage2.Text = "Изменение";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // treeView1
-            // 
-            this.treeView1.Location = new System.Drawing.Point(13, 13);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(187, 551);
-            this.treeView1.TabIndex = 1;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(210, 13);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(748, 379);
-            this.dataGridView1.TabIndex = 2;
-            // 
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
@@ -95,30 +98,41 @@
             this.tabPage3.Text = "Выборка";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(965, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(270, 379);
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            // 
+            // BDworkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(974, 576);
+            this.ClientSize = new System.Drawing.Size(1247, 576);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.tabControl1);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.tabControl1.ResumeLayout(false);
+            this.Name = "BDworkForm";
+            this.Text = "База данных Библиотеки";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
