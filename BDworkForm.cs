@@ -43,7 +43,8 @@ namespace Library
                 bdMethods.Connection.Open();
                 SelectFromDB("Экземпляр книги");
             }
-            catch { MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные."); }
+            //MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные.");
+            catch {  }
         }
         /// <summary>
         /// Метод вывода базы данных
@@ -56,9 +57,10 @@ namespace Library
                 NpgsqlDataReader reader = command.ExecuteReader();
                 DataTable dt = new DataTable();
                 dt.Load(reader);
-                dataGridView1.DataSource = dt;
+                DataBaseDGV.DataSource = dt;
             }
-            catch { MessageBox.Show("Неверно указано название таблицы."); }
+            //MessageBox.Show("Неверно указано название таблицы.");
+            catch {  }
         }
         /// <summary>
         /// Метод выбора навзвания таблицы для последующего вывода 
@@ -104,6 +106,11 @@ namespace Library
             }
             return temp;
         }
-        #endregion  
+        #endregion
+        //Добавить картинки и их вывод
+        private void DataBaseDGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = e.RowIndex;
+        }
     }
 }
