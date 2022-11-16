@@ -1,21 +1,24 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Library
 {
-    internal class BdMethods
+    internal class WorkingWithDB
     {
         string ConnectionToDB { get; } //Строка подключения к базе данных
         public NpgsqlConnection Connection { get; } //Переменная для подключение к базе данных
+        public string Table { get; set; } //Переменная хранящая название таблицы выбранной в древе
         /// <summary>
         /// Конструктор класса работы с базой данных
         /// </summary>
         /// <param name="conn"> Переменная хранящая строку подключения к базе данных </param>
-        public BdMethods(string conn) {
+        public WorkingWithDB(string conn) 
+        {
             this.ConnectionToDB = conn;
             Connection = new NpgsqlConnection(conn);
         }
@@ -24,9 +27,11 @@ namespace Library
         /// </summary>
         /// <param name="s"> Переменная хранящая название выбранной таблицы </param>
         /// <returns> Запрос для вывода выбранной таблицы</returns>
-        public static string SelectTable(string s) {
+        static string SelectTable(string s) 
+        {
             string temp = "";
-            switch (s) {
+            switch (s) 
+            {
                 case "Экземпляр книги":
                     temp = "select book_name as \"Название книги\", book_sub as \"Читатель\" from book, book_card where book_card_id = bcard_id order by book_id";
                     break;
@@ -48,6 +53,38 @@ namespace Library
                     break;
             }
             return temp;
+        }
+        /// <summary>
+        /// Метод вывода выбранной таблицы из базы данных
+        /// </summary>
+        /// <param name="s"> Переменная хранящая выбранную таблицу из древа </param>
+        /// <param name="connection"> Переменная подключения к базе данных </param>
+        /// <returns></returns>
+        public static DataTable Select(string s, NpgsqlConnection connection) 
+        {
+            DataTable dt = new DataTable();
+            string selectedtable = SelectTable(s);
+            try 
+            {
+                NpgsqlCommand command = new NpgsqlCommand(selectedtable, connection);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
+            }
+            //MessageBox.Show("Неверно указано название таблицы.");
+            catch { }
+            return dt;
+        }
+        /// <summary>
+        /// Функция удаления данных из выбранной таблицы
+        /// </summary>
+        /// <param name="id"> Переменная хранящая идентификатор удаляемой записи </param>
+        /// <param name="tableinfo"> Массив хранящий информацию о таблице. Название и название столбца id </param>
+        /// <param name="connection"> Переменная подключения к базе данных </param>
+        public static void Delete(int id, string[] tableinfo, NpgsqlConnection connection) 
+        {
+            string commandText = $"delete from {tableinfo[0]} where {tableinfo[1]} = {id}";
+            NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+            command.ExecuteNonQuery();
         }
     }
 }
