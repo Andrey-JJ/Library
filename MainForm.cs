@@ -34,6 +34,7 @@ namespace Library
             }
             //MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные.");
             catch { }
+            bdTableTree.ExpandAll();
         }
         /// <summary>
         /// Метод заполнения древа
@@ -122,36 +123,30 @@ namespace Library
         {
             if(DataBaseDGV.CurrentRow != null)
             {
-                string[] s = new string[2]; //s[0] - название таблицы s[1] - название столбца id в таблице
+                string s = ""; //s[0] - название таблицы s[1] - название столбца id в таблице
                 switch (dataBase.Table) {
                     case "Экземпляр книги":
-                        s[0] = "book";
-                        s[1] = "book_id";
+                        s = "book";
                         break;
                     case "Каталожная карточка книги":
-                        s[0] = "book_card";
-                        s[1] = "bcard_id";
+                        s = "book_card";
                         break;
                     case "Выдача":
-                        s[0] = "issue";
-                        s[1] = "is_id";
+                        s = "issue";
                         break;
                     case "Отдел":
-                        s[0] = "department";
-                        s[1] = "dep_id";
+                        s = "department";
                         break;
                     case "Абонент":
-                        s[0] = "subscriber";
-                        s[1] = "sub_id";
+                        s = "subscriber";
                         break;
                     case "Библиотекарь":
-                        s[0] = "librarian";
-                        s[1] = "lib_id";
+                        s = "librarian";
                         break;
                 }
                 int id = DataBaseDGV.CurrentRow.Index;
                 WorkingWithDB.Delete(id, s, dataBase.Connection);
-                SelectFromDB(s[0]);
+                SelectFromDB(s);
             }
         }
         #endregion
