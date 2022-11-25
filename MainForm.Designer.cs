@@ -31,31 +31,36 @@
             this.components = new System.ComponentModel.Container();
             this.DataBaseDGV = new System.Windows.Forms.DataGridView();
             this.bdTableTree = new System.Windows.Forms.TreeView();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tCActions = new System.Windows.Forms.TabControl();
+            this.tPInsert = new System.Windows.Forms.TabPage();
+            this.btnInsert = new System.Windows.Forms.Button();
+            this.tPUpdate_Delete = new System.Windows.Forms.TabPage();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tPAdditional = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.nUDIns2 = new System.Windows.Forms.NumericUpDown();
+            this.lbIns6 = new System.Windows.Forms.Label();
+            this.nUDIns1 = new System.Windows.Forms.NumericUpDown();
+            this.lbIns5 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.lbIns4 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.lbIns3 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lbIns2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lbIns1 = new System.Windows.Forms.Label();
+            this.dtPIns1 = new System.Windows.Forms.DateTimePicker();
+            this.dtPIns2 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.tCActions.SuspendLayout();
+            this.tPInsert.SuspendLayout();
+            this.tPUpdate_Delete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDIns2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDIns1)).BeginInit();
             this.SuspendLayout();
             // 
             // DataBaseDGV
@@ -77,156 +82,67 @@
             this.bdTableTree.TabIndex = 4;
             this.bdTableTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.bdTableTree_BeforeSelect);
             // 
-            // tabControl1
+            // tCActions
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 398);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(752, 166);
-            this.tabControl1.TabIndex = 3;
+            this.tCActions.Controls.Add(this.tPInsert);
+            this.tCActions.Controls.Add(this.tPUpdate_Delete);
+            this.tCActions.Controls.Add(this.tPAdditional);
+            this.tCActions.Location = new System.Drawing.Point(12, 398);
+            this.tCActions.Name = "tCActions";
+            this.tCActions.SelectedIndex = 0;
+            this.tCActions.Size = new System.Drawing.Size(945, 166);
+            this.tCActions.TabIndex = 3;
             // 
-            // tabPage1
+            // tPInsert
             // 
-            this.tabPage1.Controls.Add(this.btnAdd);
-            this.tabPage1.Controls.Add(this.numericUpDown2);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.numericUpDown1);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.textBox3);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.textBox2);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.textBox1);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(744, 137);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Добавление";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tPInsert.Controls.Add(this.dtPIns2);
+            this.tPInsert.Controls.Add(this.dtPIns1);
+            this.tPInsert.Controls.Add(this.lbIns1);
+            this.tPInsert.Controls.Add(this.comboBox1);
+            this.tPInsert.Controls.Add(this.nUDIns2);
+            this.tPInsert.Controls.Add(this.lbIns6);
+            this.tPInsert.Controls.Add(this.nUDIns1);
+            this.tPInsert.Controls.Add(this.lbIns5);
+            this.tPInsert.Controls.Add(this.textBox3);
+            this.tPInsert.Controls.Add(this.lbIns4);
+            this.tPInsert.Controls.Add(this.textBox2);
+            this.tPInsert.Controls.Add(this.lbIns3);
+            this.tPInsert.Controls.Add(this.textBox1);
+            this.tPInsert.Controls.Add(this.lbIns2);
+            this.tPInsert.Controls.Add(this.btnInsert);
+            this.tPInsert.Location = new System.Drawing.Point(4, 25);
+            this.tPInsert.Name = "tPInsert";
+            this.tPInsert.Padding = new System.Windows.Forms.Padding(3);
+            this.tPInsert.Size = new System.Drawing.Size(937, 137);
+            this.tPInsert.TabIndex = 0;
+            this.tPInsert.Text = "Добавление";
+            this.tPInsert.UseVisualStyleBackColor = true;
             // 
-            // btnAdd
+            // btnInsert
             // 
-            this.btnAdd.Location = new System.Drawing.Point(563, 90);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(173, 41);
-            this.btnAdd.TabIndex = 11;
-            this.btnAdd.Text = "Выполнить";
-            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnInsert.Location = new System.Drawing.Point(758, 90);
+            this.btnInsert.Name = "btnInsert";
+            this.btnInsert.Size = new System.Drawing.Size(173, 41);
+            this.btnInsert.TabIndex = 11;
+            this.btnInsert.Text = "Выполнить";
+            this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
-            // numericUpDown2
+            // tPUpdate_Delete
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(8, 80);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(173, 22);
-            this.numericUpDown2.TabIndex = 10;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 61);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 16);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Кол-во книг";
-            this.label6.MouseEnter += new System.EventHandler(this.OnMouseEnter);
-            this.label6.MouseLeave += new System.EventHandler(this.OnMouseLeave);
-            this.label6.MouseHover += new System.EventHandler(this.OnMouseHover);
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(563, 26);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(173, 22);
-            this.numericUpDown1.TabIndex = 8;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(560, 6);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 16);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Объем";
-            this.label5.MouseEnter += new System.EventHandler(this.OnMouseEnter);
-            this.label5.MouseLeave += new System.EventHandler(this.OnMouseLeave);
-            this.label5.MouseHover += new System.EventHandler(this.OnMouseHover);
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(378, 26);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(179, 22);
-            this.textBox3.TabIndex = 6;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(375, 6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(105, 16);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Издание книги";
-            this.label4.MouseEnter += new System.EventHandler(this.OnMouseEnter);
-            this.label4.MouseLeave += new System.EventHandler(this.OnMouseLeave);
-            this.label4.MouseHover += new System.EventHandler(this.OnMouseHover);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(193, 26);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(179, 22);
-            this.textBox2.TabIndex = 4;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(190, 6);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 16);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Автор книги";
-            this.label3.MouseEnter += new System.EventHandler(this.OnMouseEnter);
-            this.label3.MouseLeave += new System.EventHandler(this.OnMouseLeave);
-            this.label3.MouseHover += new System.EventHandler(this.OnMouseHover);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(8, 26);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(179, 22);
-            this.textBox1.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Название книги";
-            this.label2.MouseEnter += new System.EventHandler(this.OnMouseEnter);
-            this.label2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
-            this.label2.MouseHover += new System.EventHandler(this.OnMouseHover);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.btnDelete);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(744, 137);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Изменение";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tPUpdate_Delete.Controls.Add(this.btnUpdate);
+            this.tPUpdate_Delete.Controls.Add(this.btnDelete);
+            this.tPUpdate_Delete.Location = new System.Drawing.Point(4, 25);
+            this.tPUpdate_Delete.Name = "tPUpdate_Delete";
+            this.tPUpdate_Delete.Padding = new System.Windows.Forms.Padding(3);
+            this.tPUpdate_Delete.Size = new System.Drawing.Size(937, 137);
+            this.tPUpdate_Delete.TabIndex = 1;
+            this.tPUpdate_Delete.Text = "Изменение";
+            this.tPUpdate_Delete.UseVisualStyleBackColor = true;
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(565, 90);
+            this.btnDelete.Location = new System.Drawing.Point(758, 90);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(173, 41);
             this.btnDelete.TabIndex = 12;
@@ -234,14 +150,14 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // tabPage3
+            // tPAdditional
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(744, 137);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Выборка";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tPAdditional.Location = new System.Drawing.Point(4, 25);
+            this.tPAdditional.Name = "tPAdditional";
+            this.tPAdditional.Size = new System.Drawing.Size(937, 137);
+            this.tPAdditional.TabIndex = 2;
+            this.tPAdditional.Text = "Выборка";
+            this.tPAdditional.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -251,7 +167,147 @@
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
-            // BDworkForm
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(579, 90);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(173, 41);
+            this.btnUpdate.TabIndex = 13;
+            this.btnUpdate.Text = "Изменить";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
+            // nUDIns2
+            // 
+            this.nUDIns2.Location = new System.Drawing.Point(6, 78);
+            this.nUDIns2.Name = "nUDIns2";
+            this.nUDIns2.Size = new System.Drawing.Size(87, 22);
+            this.nUDIns2.TabIndex = 21;
+            // 
+            // lbIns6
+            // 
+            this.lbIns6.AutoSize = true;
+            this.lbIns6.Location = new System.Drawing.Point(3, 59);
+            this.lbIns6.Name = "lbIns6";
+            this.lbIns6.Size = new System.Drawing.Size(83, 16);
+            this.lbIns6.TabIndex = 20;
+            this.lbIns6.Text = "Кол-во книг";
+            this.lbIns6.MouseEnter += new System.EventHandler(this.OnMouseEnter);
+            this.lbIns6.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.lbIns6.MouseHover += new System.EventHandler(this.OnMouseHover);
+            // 
+            // nUDIns1
+            // 
+            this.nUDIns1.Location = new System.Drawing.Point(659, 23);
+            this.nUDIns1.Name = "nUDIns1";
+            this.nUDIns1.Size = new System.Drawing.Size(87, 22);
+            this.nUDIns1.TabIndex = 19;
+            // 
+            // lbIns5
+            // 
+            this.lbIns5.AutoSize = true;
+            this.lbIns5.Location = new System.Drawing.Point(749, 3);
+            this.lbIns5.Name = "lbIns5";
+            this.lbIns5.Size = new System.Drawing.Size(48, 16);
+            this.lbIns5.TabIndex = 18;
+            this.lbIns5.Text = "Отдел";
+            this.lbIns5.MouseEnter += new System.EventHandler(this.OnMouseEnter);
+            this.lbIns5.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.lbIns5.MouseHover += new System.EventHandler(this.OnMouseHover);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(474, 23);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(179, 22);
+            this.textBox3.TabIndex = 17;
+            // 
+            // lbIns4
+            // 
+            this.lbIns4.AutoSize = true;
+            this.lbIns4.Location = new System.Drawing.Point(656, 3);
+            this.lbIns4.Name = "lbIns4";
+            this.lbIns4.Size = new System.Drawing.Size(51, 16);
+            this.lbIns4.TabIndex = 16;
+            this.lbIns4.Text = "Объем";
+            this.lbIns4.MouseEnter += new System.EventHandler(this.OnMouseEnter);
+            this.lbIns4.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.lbIns4.MouseHover += new System.EventHandler(this.OnMouseHover);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(242, 23);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(226, 22);
+            this.textBox2.TabIndex = 15;
+            // 
+            // lbIns3
+            // 
+            this.lbIns3.AutoSize = true;
+            this.lbIns3.Location = new System.Drawing.Point(471, 3);
+            this.lbIns3.Name = "lbIns3";
+            this.lbIns3.Size = new System.Drawing.Size(100, 16);
+            this.lbIns3.TabIndex = 14;
+            this.lbIns3.Text = "Автор/Авторы";
+            this.lbIns3.MouseEnter += new System.EventHandler(this.OnMouseEnter);
+            this.lbIns3.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.lbIns3.MouseHover += new System.EventHandler(this.OnMouseHover);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 24);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(230, 22);
+            this.textBox1.TabIndex = 13;
+            // 
+            // lbIns2
+            // 
+            this.lbIns2.AutoSize = true;
+            this.lbIns2.Location = new System.Drawing.Point(239, 3);
+            this.lbIns2.Name = "lbIns2";
+            this.lbIns2.Size = new System.Drawing.Size(65, 16);
+            this.lbIns2.TabIndex = 12;
+            this.lbIns2.Text = "Издание";
+            this.lbIns2.MouseEnter += new System.EventHandler(this.OnMouseEnter);
+            this.lbIns2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.lbIns2.MouseHover += new System.EventHandler(this.OnMouseHover);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(752, 22);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(179, 24);
+            this.comboBox1.TabIndex = 22;
+            // 
+            // lbIns1
+            // 
+            this.lbIns1.AutoSize = true;
+            this.lbIns1.Location = new System.Drawing.Point(3, 3);
+            this.lbIns1.Name = "lbIns1";
+            this.lbIns1.Size = new System.Drawing.Size(73, 16);
+            this.lbIns1.TabIndex = 23;
+            this.lbIns1.Text = "Название";
+            this.lbIns1.MouseEnter += new System.EventHandler(this.OnMouseEnter);
+            this.lbIns1.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.lbIns1.MouseHover += new System.EventHandler(this.OnMouseHover);
+            // 
+            // dtPIns1
+            // 
+            this.dtPIns1.Location = new System.Drawing.Point(659, 23);
+            this.dtPIns1.Name = "dtPIns1";
+            this.dtPIns1.Size = new System.Drawing.Size(200, 22);
+            this.dtPIns1.TabIndex = 24;
+            this.dtPIns1.Visible = false;
+            // 
+            // dtPIns2
+            // 
+            this.dtPIns2.Location = new System.Drawing.Point(6, 78);
+            this.dtPIns2.Name = "dtPIns2";
+            this.dtPIns2.Size = new System.Drawing.Size(200, 22);
+            this.dtPIns2.TabIndex = 25;
+            this.dtPIns2.Visible = false;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -259,17 +315,17 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.DataBaseDGV);
             this.Controls.Add(this.bdTableTree);
-            this.Controls.Add(this.tabControl1);
-            this.Name = "BDworkForm";
+            this.Controls.Add(this.tCActions);
+            this.Name = "MainForm";
             this.Text = "База данных Библиотеки";
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
+            this.tCActions.ResumeLayout(false);
+            this.tPInsert.ResumeLayout(false);
+            this.tPInsert.PerformLayout();
+            this.tPUpdate_Delete.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDIns2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDIns1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -278,24 +334,29 @@
 
         private System.Windows.Forms.DataGridView DataBaseDGV;
         private System.Windows.Forms.TreeView bdTableTree;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabControl tCActions;
+        private System.Windows.Forms.TabPage tPInsert;
+        private System.Windows.Forms.TabPage tPUpdate_Delete;
+        private System.Windows.Forms.TabPage tPAdditional;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnInsert;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.NumericUpDown nUDIns2;
+        private System.Windows.Forms.Label lbIns6;
+        private System.Windows.Forms.NumericUpDown nUDIns1;
+        private System.Windows.Forms.Label lbIns5;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label lbIns4;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label lbIns3;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lbIns2;
+        private System.Windows.Forms.Label lbIns1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.DateTimePicker dtPIns2;
+        private System.Windows.Forms.DateTimePicker dtPIns1;
     }
 }
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Library
 {
@@ -40,7 +41,6 @@ namespace Library
                     temp = "select book_name as \"Название\", book_author as \"Автор\", book_edit as \"Издание\", book_vol as \"Объем\", department.dep_name as \"Отдел\" from book_card, department " +
                         "where department.id = book_card.dep_id";
                     break;
-                //Изменить вывод таблицы выдача
                 case "Выдача":
                     temp = "select book_name as \"Название\", sub_lastname as \"Абонент\", lib_lastname as \"Библиотекарь\", is_date as \"Дата выдачи\", is_rdate as \"Дата возврата\" FROM book_issue, subscriber, librarian, book_card " +
                         "where subscriber.id = book_issue.sub_id and librarian.id = book_issue.lib_id and book_issue.book_id = (SELECT book.id from book where book.card_id = book_card.id order by book.id asc limit 1)";
@@ -73,8 +73,7 @@ namespace Library
                 NpgsqlDataReader reader = command.ExecuteReader();
                 dt.Load(reader);
             }
-            //MessageBox.Show("Неверно указано название таблицы.");
-            catch { }
+            catch { MessageBox.Show("Неверно указано название таблицы."); }
             return dt;
         }
         /// <summary>
@@ -85,9 +84,67 @@ namespace Library
         /// <param name="connection"> Переменная подключения к базе данных </param>
         public static void Delete(int id, string tableinfo, NpgsqlConnection connection) 
         {
-            string commandText = $"delete from {tableinfo} where id = {id}";
-            NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
-            command.ExecuteNonQuery();
+            string commandText = "";
+            switch (tableinfo)
+            {
+                case "Экземпляр книги":
+                    commandText = $"delete from book where id = {id}";
+                    break;
+                case "Каталожная карточка книги":
+                    commandText = $"delete from book_card where id = {id}";
+                    break;
+                case "Выдача":
+                    commandText = $"delete from book_issue where id = {id}";
+                    break;
+                case "Отдел":
+                    commandText = $"delete from department where id = {id}";
+                    break;
+                case "Абонент":
+                    commandText = $"delete from subscriber where id = {id}";
+                    break;
+                case "Библиотекарь":
+                    commandText = $"delete from librarian where id = {id}";
+                    break;
+            }
+            try
+            { 
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                command.ExecuteNonQuery();
+            }
+            catch { }
+        }
+        public static void Insert(string tableinfo, string tabledata, NpgsqlConnection connection)
+        {
+            string commandText = "";
+            string[] dataToInsert = tabledata.Split(';');
+            switch (tableinfo)
+            {
+                case "Экземпляр книги":
+                    //Добавить проверку id карточки по названию
+                    break;
+                case "Каталожная карточка книги":
+                    //Возможно изменить 
+                    commandText = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id) values ('{dataToInsert[0]}', '{dataToInsert[1]}', '{dataToInsert[2]}', '{Int32.Parse(dataToInsert[3])}', '{Int32.Parse(dataToInsert[4])}')";
+                    break;
+                case "Выдача":
+                    //Добавить проверку всех id по именам и названиям
+                    break;
+                case "Отдел":
+                    commandText = $"insert into department (dep_name) values ('{dataToInsert[0]}')";
+                    break;
+                case "Абонент":
+                    commandText = $"insert int subscriber (sub_lastname, sub_name, sub_midname) values ('{dataToInsert[0]}', '{dataToInsert[1]}', '{dataToInsert[2]}')";
+                    break;
+                case "Библиотекарь":
+                    commandText = $"insert int librarian (lib_lastname, lib_name, lib_midname) values ('{dataToInsert[0]}', '{dataToInsert[1]}', '{dataToInsert[2]}')";
+                    break;
+            }
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                command.ExecuteNonQuery();
+            }
+            catch { }
         }
     }
 }
