@@ -42,7 +42,7 @@ namespace Library
                         "where department.id = book_card.dep_id";
                     break;
                 case "Выдача":
-                    temp = "select book_name as \"Название\", sub_lastname as \"Абонент\", lib_lastname as \"Библиотекарь\", is_date as \"Дата выдачи\", is_rdate as \"Дата возврата\" FROM book_issue, subscriber, librarian, book_card " +
+                    temp = "select book_name as \"Название\", (sub_lastname || ' ' || sub_name || ' ' || sub_midname) as \"Абонент\", (lib_lastname || ' ' || lib_name || ' ' || lib_midname) as \"Библиотекарь\", is_date as \"Дата выдачи\", is_rdate as \"Дата возврата\" FROM book_issue, subscriber, librarian, book_card " +
                         "where subscriber.id = book_issue.sub_id and librarian.id = book_issue.lib_id and book_issue.book_id = (SELECT book.id from book where book.card_id = book_card.id order by book.id asc limit 1)";
                     break;
                 case "Отдел":
@@ -113,15 +113,12 @@ namespace Library
             }
             catch { }
         }
-        public static void Insert(string tableinfo, string tabledata, NpgsqlConnection connection)
+        public static void Insert_wt_book(string tableinfo, string tabledata, NpgsqlConnection connection)
         {
             string commandText = "";
             string[] dataToInsert = tabledata.Split(';');
             switch (tableinfo)
             {
-                case "Экземпляр книги":
-                    //Добавить проверку id карточки по названию
-                    break;
                 case "Каталожная карточка книги":
                     //Возможно изменить 
                     commandText = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id) values ('{dataToInsert[0]}', '{dataToInsert[1]}', '{dataToInsert[2]}', '{Int32.Parse(dataToInsert[3])}', '{Int32.Parse(dataToInsert[4])}')";
@@ -145,6 +142,10 @@ namespace Library
                 command.ExecuteNonQuery();
             }
             catch { }
+        }
+        public static void Insert_book(string tableinfo, string tabledata, NpgsqlConnection connection)
+        {
+
         }
     }
 }

@@ -355,13 +355,20 @@ namespace Library
             }
         }
         #endregion
+        /// <summary>
+        /// Обработчик кнопки для добавления данных в таблице
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnInsert_Click(object sender, EventArgs e)
         {
             string data = "";
+            bool booktable = false;
             switch (dataBase.Table) 
             {
                 case "Экземпляр книги":
-                    //data = 
+                    booktable = true;
+                    data = $"{tBIns1.Text};{nUDIns2.Value}";
                     break;
                 case "Каталожная карточка книги":
                     data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text};{nUDIns1.Value};{cBIns1.SelectedIndex.ToString()}";
@@ -377,7 +384,8 @@ namespace Library
                     data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
                     break;
             }
-            WorkingWithDB.Insert(dataBase.Table, data, dataBase.Connection);
+            if (!booktable) WorkingWithDB.Insert_wt_book(dataBase.Table, data, dataBase.Connection);
+            else WorkingWithDB.Insert_book(dataBase.Table, data, dataBase.Connection);
             SelectFromDB(dataBase.Table);
         }
     }
