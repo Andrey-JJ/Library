@@ -36,10 +36,12 @@ namespace Library
             catch { MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные."); }
             bdTableTree.ExpandAll();
         }
+        //Добавить для оставшихся полей
+        #region UI Help information
         /// <summary>
         /// Метод заполнения древа
         /// </summary>
-        void TreeBD() 
+        void TreeBD()
         {
             bdTableTree.BeforeSelect += new TreeViewCancelEventHandler(bdTableTree_BeforeSelect);
             TreeNode node = new TreeNode("Таблицы данных: ");
@@ -51,8 +53,6 @@ namespace Library
             node.Nodes.Add("Библиотекарь");
             bdTableTree.Nodes.Add(node);
         }
-        //Добавить для оставшихся полей
-        #region UI Help information
         #region Label Helpers
         //Подчеркивание Label при наведении
         private void OnMouseEnter(object sender, EventArgs e) 
@@ -78,7 +78,7 @@ namespace Library
             string temp = "";
             switch (s)
             {
-                case "Название":
+                case "Название книги":
                     temp = "В данное текстовое поле необходимо указывать название книги.";
                     break;
                 case "Автор/Авторы":
@@ -100,6 +100,219 @@ namespace Library
             return temp;
         }
         #endregion
+        //Добавить поля для отдела
+        /// <summary>
+        /// Метод отображения полей для заполнения таблиц
+        /// </summary>
+        /// <param name="table"> Переменная хранящая значение выбранной таблицы </param>
+        void InsFields(string table)
+        {
+            switch (table)
+            {
+                case "Экземпляр книги":
+                    //visible
+                    lbIns1.Text = "Название книги"; lbIns1.Visible = true;
+                    tBIns1.Visible = true;
+                    lbIns2.Text = "Издание"; lbIns2.Visible = true;
+                    tBIns2.Visible = true;
+                    lbIns3.Text = "Автор/Авторы"; lbIns3.Visible = true;
+                    tBIns3.Visible = true;
+                    lbIns4.Text = "Объем"; lbIns4.Visible = true;
+                    nUDIns1.Visible = true;
+                    lbIns5.Text = "Отдел"; lbIns5.Visible = true;
+                    cBIns1.Visible = true;
+                    lbIns6.Text = "Кол-во книг"; lbIns6.Visible = true;
+                    nUDIns2.Visible = true;
+                    //non visible
+                    dtPIns1.Visible = false;
+                    dtPIns2.Visible = false;
+                    break;
+                case "Каталожная карточка книги":
+                    //visible
+                    lbIns1.Text = "Название книги"; lbIns1.Visible = true;
+                    tBIns1.Visible = true;
+                    lbIns2.Text = "Издание"; lbIns2.Visible = true;
+                    tBIns2.Visible = true;
+                    lbIns3.Text = "Автор/Авторы"; lbIns3.Visible = true;
+                    tBIns3.Visible = true;
+                    lbIns4.Text = "Объем"; lbIns4.Visible = true;
+                    nUDIns1.Visible = true;
+                    lbIns5.Text = "Отдел"; lbIns5.Visible = true;
+                    cBIns1.Visible = true;
+                    lbIns6.Text = "Кол-во книг"; lbIns6.Visible = true;
+                    nUDIns2.Visible = true;
+                    //non visible
+                    dtPIns1.Visible = false;
+                    dtPIns2.Visible = false;
+                    break;
+                case "Выдача":
+                    //visible
+                    lbIns1.Text = "Название книги"; lbIns1.Visible = true;
+                    tBIns1.Visible = true;
+                    lbIns2.Text = "Абонент"; lbIns2.Visible = true;
+                    tBIns2.Visible = true;
+                    lbIns3.Text = "Библиотекарь"; lbIns3.Visible = true;
+                    tBIns3.Visible = true;
+                    lbIns4.Text = "Дата выдачи"; lbIns4.Visible = true;
+                    dtPIns1.Visible = true;
+                    lbIns6.Text = "Дата возврата"; lbIns6.Visible = true;
+                    dtPIns2.Visible = true;
+                    //non visible
+                    lbIns5.Visible = false;
+                    cBIns1.Visible = false;
+                    nUDIns1.Visible = false;
+                    nUDIns2.Visible = false;
+                    break;
+                case "Отдел":
+                    //visible
+                    //non visible
+                    break;
+                case "Абонент":
+                    //visible
+                    lbIns1.Text = "Фамилия"; lbIns1.Visible = true;
+                    tBIns1.Visible = true;
+                    lbIns2.Text = "Имя"; lbIns2.Visible = true;
+                    tBIns2.Visible = true;
+                    lbIns3.Text = "Отчество"; lbIns3.Visible = true;
+                    tBIns3.Visible = true;
+                    //non visible
+                    lbIns4.Visible = false;
+                    nUDIns1.Visible = false;
+                    lbIns5.Visible = false;
+                    cBIns1.Visible = false;
+                    dtPIns1.Visible = false;
+                    lbIns6.Visible = false;
+                    nUDIns2.Visible = false;
+                    cBIns1.Visible = false;
+                    dtPIns2.Visible = false;
+                    break;
+                case "Библиотекарь":
+                    //visible
+                    lbIns1.Text = "Фамилия"; lbIns1.Visible = true;
+                    tBIns1.Visible = true;
+                    lbIns2.Text = "Имя"; lbIns2.Visible = true;
+                    tBIns2.Visible = true;
+                    lbIns3.Text = "Отчество"; lbIns3.Visible = true;
+                    tBIns3.Visible = true;
+                    //non visible
+                    lbIns4.Visible = false;
+                    nUDIns1.Visible = false;
+                    lbIns5.Visible = false;
+                    cBIns1.Visible = false;
+                    dtPIns1.Visible = false;
+                    lbIns6.Visible = false;
+                    nUDIns2.Visible = false;
+                    cBIns1.Visible = false;
+                    dtPIns2.Visible = false;
+                    break;
+            }
+        }
+        /// <summary>
+        /// Метод отображения полей для обновления таблиц
+        /// </summary>
+        /// <param name="table"> Переменная хранящая значение выбранной таблицы </param>
+        void UpFields(string table)
+        {
+            switch (table)
+            {
+                case "Экземпляр книги":
+                    //visible
+                    lbUp1.Text = "Название книги"; lbUp1.Visible = true;
+                    tBUp1.Visible = true;
+                    lbUp2.Text = "Издание"; lbUp2.Visible = true;
+                    tBUp2.Visible = true;
+                    lbUp3.Text = "Автор/Авторы"; lbUp3.Visible = true;
+                    tBUp3.Visible = true;
+                    lbUp4.Text = "Объем"; lbUp4.Visible = true;
+                    nUDUp1.Visible = true;
+                    lbUp5.Text = "Отдел"; lbUp5.Visible = true;
+                    cBUp1.Visible = true;
+                    lbUp6.Text = "Кол-во книг"; lbUp6.Visible = true;
+                    nUDUp2.Visible = true;
+                    //non visible
+                    dtPUp1.Visible = false;
+                    dtPUp2.Visible = false;
+                    break;
+                case "Каталожная карточка книги":
+                    //visible
+                    lbUp1.Text = "Название книги"; lbUp1.Visible = true;
+                    tBUp1.Visible = true;
+                    lbUp2.Text = "Издание"; lbUp2.Visible = true;
+                    tBUp2.Visible = true;
+                    lbUp3.Text = "Автор/Авторы"; lbUp3.Visible = true;
+                    tBUp3.Visible = true;
+                    lbUp4.Text = "Объем"; lbUp4.Visible = true;
+                    nUDUp1.Visible = true;
+                    lbUp5.Text = "Отдел"; lbUp5.Visible = true;
+                    cBUp1.Visible = true;
+                    lbUp6.Text = "Кол-во книг"; lbUp6.Visible = true;
+                    nUDUp2.Visible = true;
+                    //non visible
+                    dtPUp1.Visible = false;
+                    dtPUp2.Visible = false;
+                    break;
+                case "Выдача":
+                    //visible
+                    lbUp1.Text = "Название книги"; lbUp1.Visible = true;
+                    tBUp1.Visible = true;
+                    lbUp2.Text = "Абонент"; lbUp2.Visible = true;
+                    tBUp2.Visible = true;
+                    lbUp3.Text = "Библиотекарь"; lbUp3.Visible = true;
+                    tBUp3.Visible = true;
+                    lbUp4.Text = "Дата выдачи"; lbUp4.Visible = true;
+                    dtPUp1.Visible = true;
+                    lbUp6.Text = "Дата возврата"; lbUp6.Visible = true;
+                    dtPUp2.Visible = true;
+                    //non visible
+                    lbUp5.Visible = false;
+                    cBUp1.Visible = false;
+                    nUDUp1.Visible = false;
+                    nUDUp2.Visible = false;
+                    break;
+                case "Отдел":
+                    //visible
+                    //non visible
+                    break;
+                case "Абонент":
+                    //visible
+                    lbUp1.Text = "Фамилия"; lbUp1.Visible = true;
+                    tBUp1.Visible = true;
+                    lbUp2.Text = "Имя"; lbUp2.Visible = true;
+                    tBUp2.Visible = true;
+                    lbUp3.Text = "Отчество"; lbUp3.Visible = true;
+                    tBUp3.Visible = true;
+                    //non visible
+                    lbUp4.Visible = false;
+                    nUDUp1.Visible = false;
+                    lbUp5.Visible = false;
+                    cBUp1.Visible = false;
+                    dtPUp1.Visible = false;
+                    lbUp6.Visible = false;
+                    nUDUp2.Visible = false;
+                    cBUp1.Visible = false;
+                    dtPUp2.Visible = false;
+                    break;
+                case "Библиотекарь":
+                    //visible
+                    lbUp1.Text = "Фамилия"; lbUp1.Visible = true;
+                    tBUp1.Visible = true;
+                    lbUp2.Text = "Имя"; lbUp2.Visible = true;
+                    tBUp2.Visible = true;
+                    lbUp3.Text = "Отчество"; lbUp3.Visible = true;
+                    tBUp3.Visible = true;
+                    //non visible
+                    lbUp4.Visible = false;
+                    nUDUp1.Visible = false;
+                    lbUp5.Visible = false;
+                    cBUp1.Visible = false;
+                    dtPUp1.Visible = false;
+                    lbUp6.Visible = false;
+                    nUDUp2.Visible = false;
+                    cBUp1.Visible = false;
+                    dtPUp2.Visible = false;
+                    break;
+            }
+        }
         #endregion
         //Добавить картинки и их вывод
         private void DataBaseDGV_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -125,109 +338,6 @@ namespace Library
             dataBase.Table = e.Node.Text;
             if (dataBase.Table != "Таблицы данных: ") SelectFromDB(dataBase.Table);
         }
-        //Добавить поля для отдела
-        void InsFields(string table)
-        {
-            switch (table)
-            {
-                case "Экземпляр книги":
-                    //visible
-                    lbIns1.Text = "Название"; lbIns1.Visible = true;
-                    textBox1.Visible = true;
-                    lbIns6.Text = "Кол-во книг"; lbIns6.Visible = true;
-                    nUDIns2.Visible = true;
-                    //non visible
-                    lbIns2.Visible = false;
-                    textBox2.Visible = false;
-                    lbIns3.Visible = false;
-                    textBox3.Visible = false;              
-                    lbIns4.Visible = false;
-                    nUDIns1.Visible = false;
-                    lbIns5.Visible = false;
-                    comboBox1.Visible = false;
-                    dtPIns1.Visible = false;
-                    dtPIns2.Visible = false;
-                    break;
-                case "Каталожная карточка книги":
-                    //visible
-                    lbIns1.Text = "Название"; lbIns1.Visible = true;
-                    textBox1.Visible = true;
-                    lbIns2.Text = "Издание"; lbIns2.Visible = true;
-                    textBox2.Visible = true;
-                    lbIns3.Text = "Автор/Авторы"; lbIns3.Visible = true;
-                    textBox3.Visible = true;
-                    lbIns4.Text = "Объем"; lbIns4.Visible = true;
-                    nUDIns1.Visible = true;
-                    lbIns5.Text = "Отдел"; lbIns5.Visible = true;
-                    comboBox1.Visible = true;
-                    //non visible
-                    lbIns6.Visible = false;
-                    nUDIns2.Visible = false;
-                    dtPIns1.Visible = false;
-                    dtPIns2.Visible = false;
-                    break;
-                case "Выдача":
-                    //visible
-                    lbIns1.Text = "Название книги"; lbIns1.Visible = true;
-                    textBox1.Visible = true;
-                    lbIns2.Text = "Абонент"; lbIns2.Visible = true;
-                    textBox2.Visible = true;
-                    lbIns3.Text = "Библиотекарь"; lbIns3.Visible = true;
-                    textBox3.Visible = true;
-                    lbIns4.Text = "Дата выдачи"; lbIns4.Visible = true;
-                    dtPIns1.Visible = true;
-                    lbIns6.Text = "Дата возврата"; lbIns6.Visible = true;
-                    dtPIns2.Visible = true;
-                    //non visible
-                    lbIns5.Visible = true;
-                    comboBox1.Visible = false;
-                    nUDIns1.Visible = false;
-                    nUDIns2.Visible = false;
-                    break;
-                case "Отдел":
-                    //visible
-                    //non visible
-                    break;
-                case "Абонент":
-                    //visible
-                    lbIns1.Text = "Фамилия"; lbIns1.Visible = true;
-                    textBox1.Visible = true;
-                    lbIns2.Text = "Имя"; lbIns2.Visible = true;
-                    textBox2.Visible = true;
-                    lbIns3.Text = "Отчество"; lbIns3.Visible = true;
-                    textBox3.Visible = true;
-                    //non visible
-                    lbIns4.Visible = false;
-                    nUDIns1.Visible = false;
-                    lbIns5.Visible = false;
-                    comboBox1.Visible = false;
-                    dtPIns1.Visible = false;
-                    lbIns6.Visible = false;
-                    nUDIns2.Visible = false;
-                    comboBox1.Visible = false;
-                    dtPIns2.Visible = false;
-                    break;
-                case "Библиотекарь":
-                    //visible
-                    lbIns1.Text = "Фамилия"; lbIns1.Visible = true;
-                    textBox1.Visible = true;
-                    lbIns2.Text = "Имя"; lbIns2.Visible = true;
-                    textBox2.Visible = true;
-                    lbIns3.Text = "Отчество"; lbIns3.Visible = true;
-                    textBox3.Visible = true;
-                    //non visible
-                    lbIns4.Visible = false;
-                    nUDIns1.Visible = false;
-                    lbIns5.Visible = false;
-                    comboBox1.Visible = false;
-                    dtPIns1.Visible = false;
-                    lbIns6.Visible = false;
-                    nUDIns2.Visible = false;
-                    comboBox1.Visible = false;
-                    dtPIns2.Visible = false;
-                    break;
-            }
-        }
         #endregion
         #region Delete
         /// <summary>
@@ -247,7 +357,28 @@ namespace Library
         #endregion
         private void btnInsert_Click(object sender, EventArgs e)
         {
-
+            string data = "";
+            switch (dataBase.Table) 
+            {
+                case "Экземпляр книги":
+                    //data = 
+                    break;
+                case "Каталожная карточка книги":
+                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text};{nUDIns1.Value};{cBIns1.SelectedIndex.ToString()}";
+                    break;
+                case "Выдача":
+                    break;
+                case "Отдел":
+                    break;
+                case "Абонент":
+                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
+                    break;
+                case "Библиотекарь":
+                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
+                    break;
+            }
+            WorkingWithDB.Insert(dataBase.Table, data, dataBase.Connection);
+            SelectFromDB(dataBase.Table);
         }
     }
 }
