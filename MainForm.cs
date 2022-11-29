@@ -13,35 +13,34 @@ namespace Library
 {
     public partial class MainForm : Form
     {
+        #region Start Work
         public MainForm() 
         {
             InitializeComponent();
-            StartWork();
+            AfterLoadForm();
         }
-        WorkingWithDB dataBase; //Элемент класса для работы с базой данных
+        ProcessingRequest dataBase; //Элемент класса для работы с базой данных
         /// <summary>
         /// Метод начала работы с базой данных
         /// </summary>
-        void StartWork() 
+        void AfterLoadForm() 
         {
-            TreeBD();
+            GetTablesForTree();
             UserConnection user = new UserConnection("UserPig", "masterkey");
-            dataBase = new WorkingWithDB(user.OpenConnection());
+            dataBase = new ProcessingRequest(user.OpenConnection());
             try
             {
                 dataBase.Connection.Open();
-                SelectFromDB("Экземпляр книги");
+                dataBase.Table = "Экземпляр книги";
+                SelectFromDB(dataBase.Table);
             }
-            //MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные.");
             catch { MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные."); }
             bdTableTree.ExpandAll();
         }
-        //Добавить для оставшихся полей
-        #region UI Help information
         /// <summary>
         /// Метод заполнения древа
         /// </summary>
-        void TreeBD()
+        void GetTablesForTree()
         {
             bdTableTree.BeforeSelect += new TreeViewCancelEventHandler(bdTableTree_BeforeSelect);
             TreeNode node = new TreeNode("Таблицы данных: ");
@@ -53,6 +52,8 @@ namespace Library
             node.Nodes.Add("Библиотекарь");
             bdTableTree.Nodes.Add(node);
         }
+        #endregion
+        //UI Закончено?
         #region Label Helpers
         //Подчеркивание Label при наведении
         private void OnMouseEnter(object sender, EventArgs e) 
@@ -100,7 +101,7 @@ namespace Library
             return temp;
         }
         #endregion
-        //Добавить поля для отдела
+        #region Fields Helpers
         /// <summary>
         /// Метод отображения полей для заполнения таблиц
         /// </summary>
@@ -165,7 +166,21 @@ namespace Library
                     break;
                 case "Отдел":
                     //visible
+                    lbIns1.Text = "Название отдела"; lbIns1.Visible = true;
+                    tBIns1.Visible = true;
                     //non visible
+                    lbIns2.Visible = false;
+                    tBIns2.Visible = false;
+                    lbIns3.Visible = false;
+                    tBIns3.Visible = false;
+                    lbIns4.Visible = false;
+                    dtPIns1.Visible = false;
+                    nUDIns1.Visible = false;
+                    lbIns5.Visible = false;
+                    cBIns1.Visible = false;
+                    nUDIns2.Visible = false;
+                    dtPIns2.Visible = false;
+                    lbIns6.Visible = false;
                     break;
                 case "Абонент":
                     //visible
@@ -271,7 +286,21 @@ namespace Library
                     break;
                 case "Отдел":
                     //visible
+                    lbUp1.Text = "Название отдела"; lbUp1.Visible = true;
+                    tBUp1.Visible = true;
                     //non visible
+                    lbUp2.Visible = false;
+                    tBUp2.Visible = false;
+                    lbUp3.Visible = false;
+                    tBUp3.Visible = false;
+                    lbUp4.Visible = false;
+                    dtPUp1.Visible = false;
+                    nUDUp1.Visible = false;
+                    lbUp5.Visible = false;
+                    cBUp1.Visible = false;
+                    lbUp6.Visible = false;
+                    nUDUp2.Visible = false;
+                    dtPUp2.Visible = false;
                     break;
                 case "Абонент":
                     //visible
@@ -319,7 +348,7 @@ namespace Library
         {
             int id = e.RowIndex;
         }
-        //Добавить оставшиеся методы
+        //Добавить UPDATE, настроить и проверить Insert
         #region Select
         /// <summary>
         /// Метод вывода базы данных
@@ -327,8 +356,9 @@ namespace Library
         /// <param name="s"> Переменная хранящая название таблицы, выбранной из древа </param>
         void SelectFromDB(string s)
         {
-            DataBaseDGV.DataSource = WorkingWithDB.Select(s, dataBase.Connection);
+            DataBaseDGV.DataSource = ProcessingRequest.Select(s, dataBase.Connection);
             InsFields(s);
+            UpFields(s);
         }
         /// <summary>
         /// Метод выбора навзвания таблицы для последующего вывода 
@@ -350,11 +380,12 @@ namespace Library
             if(DataBaseDGV.CurrentRow != null)
             {
                 int id = DataBaseDGV.CurrentRow.Index;
-                WorkingWithDB.Delete(id, dataBase.Table, dataBase.Connection);
+                ProcessingRequest.Delete(id, dataBase.Table, dataBase.Connection);
                 SelectFromDB(dataBase.Table);
             }
         }
         #endregion
+        #region Insert
         /// <summary>
         /// Обработчик кнопки для добавления данных в таблице
         /// </summary>
@@ -371,22 +402,25 @@ namespace Library
                     data = $"{tBIns1.Text};{nUDIns2.Value}";
                     break;
                 case "Каталожная карточка книги":
-                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text};{nUDIns1.Value};{cBIns1.SelectedIndex.ToString()}";
+                    data = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id) values ('{tBIns1.Text}', '{tBIns2.Text}', '{tBIns3.Text}', '{Int32.Parse(nUDIns1.Value.ToString())}', '{cBIns1.SelectedIndex}')";
                     break;
                 case "Выдача":
+                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text};{dtPIns1.Value.Date};{dtPIns2.Value.Date}";
                     break;
                 case "Отдел":
+                    data = $"insert into department (dep_name) values ('{tBIns1.Text}')";
                     break;
                 case "Абонент":
-                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
+                    data = $"insert int subscriber (sub_lastname, sub_name, sub_midname) values ('{tBIns1.Text}', '{tBIns2.Text}', '{tBIns3.Text}')";
                     break;
                 case "Библиотекарь":
-                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
+                    data = $"insert int librarian (lib_lastname, lib_name, lib_midname) values ('{tBIns1.Text}', '{tBIns2.Text}', '{tBIns3.Text}')";
                     break;
             }
-            if (!booktable) WorkingWithDB.Insert_wt_book(dataBase.Table, data, dataBase.Connection);
-            else WorkingWithDB.Insert_book(dataBase.Table, data, dataBase.Connection);
+            if (!booktable) ProcessingRequest.InsertWT_book_issues(data, dataBase.Connection);
+            else ProcessingRequest.Insert_book(data, dataBase.Connection);
             SelectFromDB(dataBase.Table);
         }
+        #endregion
     }
 }
