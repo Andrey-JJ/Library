@@ -49,11 +49,6 @@
             this.lbIns2 = new System.Windows.Forms.Label();
             this.btnInsert = new System.Windows.Forms.Button();
             this.tPUpdate_Delete = new System.Windows.Forms.TabPage();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.tPAdditional = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.dtPUp2 = new System.Windows.Forms.DateTimePicker();
             this.dtPUp1 = new System.Windows.Forms.DateTimePicker();
             this.lbUp1 = new System.Windows.Forms.Label();
@@ -68,15 +63,21 @@
             this.lbUp3 = new System.Windows.Forms.Label();
             this.tBUp1 = new System.Windows.Forms.TextBox();
             this.lbUp2 = new System.Windows.Forms.Label();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.tPAdditional = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.npgsqlDataAdapter1 = new Npgsql.NpgsqlDataAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
             this.tCActions.SuspendLayout();
             this.tPInsert.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDIns2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDIns1)).BeginInit();
             this.tPUpdate_Delete.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // DataBaseDGV
@@ -301,42 +302,6 @@
             this.tPUpdate_Delete.Text = "Изменение";
             this.tPUpdate_Delete.UseVisualStyleBackColor = true;
             // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(579, 90);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(173, 41);
-            this.btnUpdate.TabIndex = 13;
-            this.btnUpdate.Text = "Изменить";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(758, 90);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(173, 41);
-            this.btnDelete.TabIndex = 12;
-            this.btnDelete.Text = "Удалить";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // tPAdditional
-            // 
-            this.tPAdditional.Location = new System.Drawing.Point(4, 25);
-            this.tPAdditional.Name = "tPAdditional";
-            this.tPAdditional.Size = new System.Drawing.Size(937, 137);
-            this.tPAdditional.TabIndex = 2;
-            this.tPAdditional.Text = "Выборка";
-            this.tPAdditional.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(963, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(270, 379);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
-            // 
             // dtPUp2
             // 
             this.dtPUp2.Location = new System.Drawing.Point(7, 79);
@@ -468,6 +433,49 @@
             this.lbUp2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
             this.lbUp2.MouseHover += new System.EventHandler(this.OnMouseHover);
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(579, 90);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(173, 41);
+            this.btnUpdate.TabIndex = 13;
+            this.btnUpdate.Text = "Изменить";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(758, 90);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(173, 41);
+            this.btnDelete.TabIndex = 12;
+            this.btnDelete.Text = "Удалить";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // tPAdditional
+            // 
+            this.tPAdditional.Location = new System.Drawing.Point(4, 25);
+            this.tPAdditional.Name = "tPAdditional";
+            this.tPAdditional.Size = new System.Drawing.Size(937, 137);
+            this.tPAdditional.TabIndex = 2;
+            this.tPAdditional.Text = "Выборка";
+            this.tPAdditional.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(963, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(270, 379);
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            // 
+            // npgsqlDataAdapter1
+            // 
+            this.npgsqlDataAdapter1.DeleteCommand = null;
+            this.npgsqlDataAdapter1.InsertCommand = null;
+            this.npgsqlDataAdapter1.SelectCommand = null;
+            this.npgsqlDataAdapter1.UpdateCommand = null;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -487,9 +495,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nUDIns1)).EndInit();
             this.tPUpdate_Delete.ResumeLayout(false);
             this.tPUpdate_Delete.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -535,6 +543,7 @@
         private System.Windows.Forms.Label lbUp3;
         private System.Windows.Forms.TextBox tBUp1;
         private System.Windows.Forms.Label lbUp2;
+        private Npgsql.NpgsqlDataAdapter npgsqlDataAdapter1;
     }
 }
 

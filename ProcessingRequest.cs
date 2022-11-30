@@ -118,14 +118,45 @@ namespace Library
         /// </summary>
         /// <param name="commandText"> Переменная хранящая команду для добавления </param>
         /// <param name="connection"> Переменная подключения к базе данных </param>
-        public static void InsertWT_book_issues(string commandText, NpgsqlConnection connection)
+        public static void Insert(string table, string[] data, NpgsqlConnection connection)
         {
-            try
+            string commandText = "";
+            //bool cardHaveBooks = false;
+            string[] textboxes = data[0].Split(';');
+            string[] numerics = data[1].Split(';');
+            string book = textboxes[0] + ";" + numerics[1];
+            if (table == "Экземпляр книги") Insert_book(book, connection);
+            else if (table == "Выдача")
             {
-                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
-                command.ExecuteNonQuery();
+                string[] datepickers = data[4].Split(';');
             }
-            catch { }
+            else
+            {
+                int comboboxes = Int32.Parse(data[2]);
+                switch (table)
+                {
+                    case "Каталожная карточка книги":
+                        commandText = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}', '{Int32.Parse(numerics[0])}', '{comboboxes}')";
+                        //cardHaveBooks = true;
+                        break;
+                    case "Отдел":
+                        commandText = $"insert into department (dep_name) values ('{textboxes[0]}')";
+                        break;
+                    case "Абонент":
+                        commandText = $"insert int subscriber (sub_lastname, sub_name, sub_midname) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}')";
+                        break;
+                    case "Библиотекарь":
+                        commandText = $"insert int librarian (lib_lastname, lib_name, lib_midname) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}')";
+                        break;
+                }
+                try
+                {
+                    NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                    command.ExecuteNonQuery();
+                    //if (cardHaveBooks) Insert_book(book, connection);
+                }
+                catch { MessageBox.Show($"Не удалось добавить данные в таблицу {table}.\n Введены не корректные данные."); }
+            }
         }
         /// <summary>
         /// Функция добавления данных в таблицу экземпляр книги
@@ -151,9 +182,9 @@ namespace Library
                         command.ExecuteNonQuery();
                     }
                 }
-                catch { MessageBox.Show($"Не возможно добавить значения в таблицы из-за указаных вами данных."); }
+                catch { } //MessageBox.Show($"Не возможно добавить значения в таблицы из-за указаных вами данных.");
             }
-            else MessageBox.Show("Невозможно добавить книги, если кол-во равно или меньше 0.");
+            else MessageBox.Show("Внимание!\nНевозможно добавить книги, если указанное кол-во равно или меньше 0.");
         }
         /// <summary>
         /// Метод получения id каталожной карточки по названию

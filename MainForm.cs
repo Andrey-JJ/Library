@@ -393,32 +393,12 @@ namespace Library
         /// <param name="e"></param>
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            string data = "";
-            bool booktable = false;
-            switch (dataBase.Table) 
-            {
-                case "Экземпляр книги":
-                    booktable = true;
-                    data = $"{tBIns1.Text};{nUDIns2.Value}";
-                    break;
-                case "Каталожная карточка книги":
-                    data = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id) values ('{tBIns1.Text}', '{tBIns2.Text}', '{tBIns3.Text}', '{Int32.Parse(nUDIns1.Value.ToString())}', '{cBIns1.SelectedIndex}')";
-                    break;
-                case "Выдача":
-                    data = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text};{dtPIns1.Value.Date};{dtPIns2.Value.Date}";
-                    break;
-                case "Отдел":
-                    data = $"insert into department (dep_name) values ('{tBIns1.Text}')";
-                    break;
-                case "Абонент":
-                    data = $"insert int subscriber (sub_lastname, sub_name, sub_midname) values ('{tBIns1.Text}', '{tBIns2.Text}', '{tBIns3.Text}')";
-                    break;
-                case "Библиотекарь":
-                    data = $"insert int librarian (lib_lastname, lib_name, lib_midname) values ('{tBIns1.Text}', '{tBIns2.Text}', '{tBIns3.Text}')";
-                    break;
-            }
-            if (!booktable) ProcessingRequest.InsertWT_book_issues(data, dataBase.Connection);
-            else ProcessingRequest.Insert_book(data, dataBase.Connection);
+            string[] data = new string[4];
+            data[0] = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
+            data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
+            data[2] = "0"; //$"{cBIns1.SelectedIndex}";
+            data[3] = $"{dtPIns1.Value.Date};{dtPIns1.Value.Date}";
+            ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
             SelectFromDB(dataBase.Table);
         }
         #endregion
