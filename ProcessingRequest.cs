@@ -35,18 +35,19 @@ namespace Library
             {
                 case "Экземпляр книги":
                     temp = "select book_name as \"Название книги\", book_sub as \"Читатель\" from book, card" +
-                        " where card_id = card.id";
+                        " where card_id = card.id order by book.id";
                     break;
                 case "Каталожная карточка книги":
                     temp = "select book_name as \"Название\", book_author as \"Автор\", book_edit as \"Издание\", book_vol as \"Объем\", department.dep_name as \"Отдел\" from card, department " +
-                        "where department.id = card.dep_id";
+                        "where department.id = card.dep_id order by card.id";
                     break;
                 case "Выдача":
                     temp = "select book_name as \"Название\", (sub_lastname || ' ' || sub_name || ' ' || sub_midname) as \"Абонент\", (lib_lastname || ' ' || lib_name || ' ' || lib_midname) as \"Библиотекарь\", is_date as \"Дата выдачи\", is_rdate as \"Дата возврата\" FROM book_issue, subscriber, librarian, card " +
-                        "where subscriber.id = book_issue.sub_id and librarian.id = book_issue.lib_id and book_issue.book_id = (SELECT book.id from book where book.card_id = card.id order by book.id asc limit 1)";
+                        "where subscriber.id = book_issue.sub_id and librarian.id = book_issue.lib_id and book_issue.book_id = (SELECT book.id from book where book.card_id = card.id order by book.id asc limit 1) " +
+                        "order by book_issue.id";
                     break;
                 case "Отдел":
-                    temp = "select id as \"Номер отдела\", dep_name as \"Название отдела\" from department";
+                    temp = "select id as \"Номер отдела\", dep_name as \"Название отдела\" from department order by department.id";
                     break;
                 case "Абонент":
                     temp = "select sub_lastname as \"Фамилия\", sub_name as \"Имя\", sub_midname as \"Отчество\" from subscriber order by sub_lastname";
@@ -63,10 +64,10 @@ namespace Library
         /// <param name="s"> Переменная хранящая выбранную таблицу из древа </param>
         /// <param name="connection"> Переменная подключения к базе данных </param>
         /// <returns></returns>
-        public static DataTable Select(string s, NpgsqlConnection connection) 
+        public static DataTable Select(string table, NpgsqlConnection connection) 
         {
             DataTable dt = new DataTable();
-            string selectedtable = SelectTable(s);
+            string selectedtable = SelectTable(table);
             try 
             {
                 NpgsqlCommand command = new NpgsqlCommand(selectedtable, connection);
@@ -74,6 +75,34 @@ namespace Library
                 dt.Load(reader);
             }
             catch { MessageBox.Show("Неверно указано название таблицы."); }
+            return dt;
+        }
+        
+        public static DataTable SelectAllDeps(NpgsqlConnection connection)
+        {
+            DataTable dt = new DataTable();
+            string commandText = "select dep_name from department order by id";
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            return dt;
+        }
+        
+        public static DataTable SelectImage(int id, NpgsqlConnection connection)
+        {
+            DataTable dt = new DataTable();
+            string commandText = $"select book_img from card where card.id = {id}";
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
             return dt;
         }
         /// <summary>
@@ -118,7 +147,7 @@ namespace Library
         /// </summary>
         /// <param name="commandText"> Переменная хранящая команду для добавления </param>
         /// <param name="connection"> Переменная подключения к базе данных </param>
-        public static void Insert(string table, string[] data, NpgsqlConnection connection)
+        public static void Insert(string table, string[] data, byte[] img, NpgsqlConnection connection)
         {
             string commandText = "";
             //bool cardHaveBooks = false;
@@ -132,12 +161,13 @@ namespace Library
             }
             else
             {
+                NpgsqlParameter parameter = new NpgsqlParameter("@photo", DbType.Binary);
                 int comboboxes = Int32.Parse(data[2]);
                 switch (table)
                 {
                     case "Каталожная карточка книги":
-                        commandText = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}', '{Int32.Parse(numerics[0])}', '{comboboxes}')";
-                        //cardHaveBooks = true;
+                        commandText = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id, book_img) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}', '{Int32.Parse(numerics[0])}', '{comboboxes}', @photo)";
+                        parameter.Value = img;
                         break;
                     case "Отдел":
                         commandText = $"insert into department (dep_name) values ('{textboxes[0]}')";
@@ -152,6 +182,7 @@ namespace Library
                 try
                 {
                     NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                    if(table == "Каталожная карточка книги") command.Parameters.Add(parameter);
                     command.ExecuteNonQuery();
                     //if (cardHaveBooks) Insert_book(book, connection);
                 }

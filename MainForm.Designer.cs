@@ -69,6 +69,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.npgsqlDataAdapter1 = new Npgsql.NpgsqlDataAdapter();
+            this.chBUp1 = new System.Windows.Forms.CheckBox();
+            this.lbUp7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
             this.tCActions.SuspendLayout();
             this.tPInsert.SuspendLayout();
@@ -165,6 +167,7 @@
             // 
             // cBIns1
             // 
+            this.cBIns1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIns1.FormattingEnabled = true;
             this.cBIns1.Location = new System.Drawing.Point(774, 22);
             this.cBIns1.Name = "cBIns1";
@@ -278,6 +281,8 @@
             // 
             // tPUpdate_Delete
             // 
+            this.tPUpdate_Delete.Controls.Add(this.lbUp7);
+            this.tPUpdate_Delete.Controls.Add(this.chBUp1);
             this.tPUpdate_Delete.Controls.Add(this.dtPUp2);
             this.tPUpdate_Delete.Controls.Add(this.dtPUp1);
             this.tPUpdate_Delete.Controls.Add(this.lbUp1);
@@ -332,6 +337,7 @@
             // 
             // cBUp1
             // 
+            this.cBUp1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBUp1.FormattingEnabled = true;
             this.cBUp1.Location = new System.Drawing.Point(776, 23);
             this.cBUp1.Name = "cBUp1";
@@ -476,6 +482,24 @@
             this.npgsqlDataAdapter1.SelectCommand = null;
             this.npgsqlDataAdapter1.UpdateCommand = null;
             // 
+            // chBUp1
+            // 
+            this.chBUp1.AutoSize = true;
+            this.chBUp1.Location = new System.Drawing.Point(230, 82);
+            this.chBUp1.Name = "chBUp1";
+            this.chBUp1.Size = new System.Drawing.Size(18, 17);
+            this.chBUp1.TabIndex = 41;
+            this.chBUp1.UseVisualStyleBackColor = true;
+            // 
+            // lbUp7
+            // 
+            this.lbUp7.AutoSize = true;
+            this.lbUp7.Location = new System.Drawing.Point(210, 60);
+            this.lbUp7.Name = "lbUp7";
+            this.lbUp7.Size = new System.Drawing.Size(69, 16);
+            this.lbUp7.TabIndex = 42;
+            this.lbUp7.Text = "Читатель";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -544,6 +568,8 @@
         private System.Windows.Forms.TextBox tBUp1;
         private System.Windows.Forms.Label lbUp2;
         private Npgsql.NpgsqlDataAdapter npgsqlDataAdapter1;
+        private System.Windows.Forms.CheckBox chBUp1;
+        private System.Windows.Forms.Label lbUp7;
     }
 }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +38,18 @@ namespace Library
             }
             catch { MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные."); }
             bdTableTree.ExpandAll();
+        }
+        void GetAllDepartmens(NpgsqlConnection connection)
+        {
+            DataTable dt = ProcessingRequest.SelectAllDeps(connection);
+            if(dt.Rows.Count > 0)
+            {
+                for(int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cBIns1.Items.Add(dt.Rows[i][0].ToString());
+                    cBUp1.Items.Add(dt.Rows[i][0].ToString());
+                }
+            }
         }
         /// <summary>
         /// Метод заполнения древа
@@ -82,6 +96,9 @@ namespace Library
                 case "Название книги":
                     temp = "В данное текстовое поле необходимо указывать название книги.";
                     break;
+                case "Название отдела":
+                    temp = "В данное текстовое поле необходимо указывать название отдела.";
+                    break;
                 case "Автор/Авторы":
                     temp = "В данное текстовое поле необходимо указывать автора/ов книги.";
                     break;
@@ -92,10 +109,31 @@ namespace Library
                     temp = "В данное числовое поле необходимо указывать объем книги (Кол-во страниц).";
                     break;
                 case "Кол-во книг":
-                    temp = "В данное числовое поле необходимо указывать кол-во книг необходимое для добавления, изменения или удаления";
+                    temp = "В данное числовое поле необходимо указывать кол-во книг необходимое для добавления, изменения или удаления.";
                     break;
                 case "Отдел":
-                    temp = "В данное поле необходимо выбрать отдел, в котором будут хранится книги связанные с этой карточкой";
+                    temp = "В данное поле необходимо выбрать отдел, в котором будут хранится книги связанные с этой карточкой.";
+                    break;
+                case "Дата выдачи":
+                    temp = "В данное поле необходимо указывать или выбрать дату выдачи выбранной книги.";
+                    break;
+                case "Дата возврата":
+                    temp = "В данное поле необходимо указывать или выбрать дату возврата выбранной книги.";
+                    break;
+                case "Абонент":
+                    temp = "В данное тексовое поле необходимо указывать ФИО читателя, берущего книгу";
+                    break;
+                case "Библиотекарь":
+                    temp = "В данное тексовое поле необходимо указывать ФИО библиотекаря, выдающего книгу";
+                    break;
+                case "Фамилия":
+                    temp = "В данное тексовое поле необходимо указывать фамилию человека";
+                    break;
+                case "Имя":
+                    temp = "В данное тексовое поле необходимо указывать имя человека";
+                    break;
+                case "Отчество":
+                    temp = "В данное тексовое поле необходимо указывать отчество человека";
                     break;
             }
             return temp;
@@ -244,6 +282,8 @@ namespace Library
                     cBUp1.Visible = true;
                     lbUp6.Text = "Кол-во книг"; lbUp6.Visible = true;
                     nUDUp2.Visible = true;
+                    lbUp7.Visible = true;
+                    chBUp1.Visible = true;
                     //non visible
                     dtPUp1.Visible = false;
                     dtPUp2.Visible = false;
@@ -265,6 +305,7 @@ namespace Library
                     //non visible
                     dtPUp1.Visible = false;
                     dtPUp2.Visible = false;
+                    lbUp7.Visible = false;
                     break;
                 case "Выдача":
                     //visible
@@ -283,6 +324,7 @@ namespace Library
                     cBUp1.Visible = false;
                     nUDUp1.Visible = false;
                     nUDUp2.Visible = false;
+                    lbUp7.Visible = false;
                     break;
                 case "Отдел":
                     //visible
@@ -301,6 +343,7 @@ namespace Library
                     lbUp6.Visible = false;
                     nUDUp2.Visible = false;
                     dtPUp2.Visible = false;
+                    lbUp7.Visible = false;
                     break;
                 case "Абонент":
                     //visible
@@ -320,6 +363,7 @@ namespace Library
                     nUDUp2.Visible = false;
                     cBUp1.Visible = false;
                     dtPUp2.Visible = false;
+                    lbUp7.Visible = false;
                     break;
                 case "Библиотекарь":
                     //visible
@@ -339,26 +383,44 @@ namespace Library
                     nUDUp2.Visible = false;
                     cBUp1.Visible = false;
                     dtPUp2.Visible = false;
+                    lbUp7.Visible = false;
                     break;
             }
         }
         #endregion
         //Добавить картинки и их вывод
+        #region Image
         private void DataBaseDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = e.RowIndex;
+            int id = e.RowIndex; 
+            DataTable dt = ProcessingRequest.SelectImage(id, dataBase.Connection);
+            Image img = null; 
+            if (dt != null)
+            {
+                byte[] imageArray = (byte[])dt.Rows[0][0];
+                var ms = new MemoryStream(imageArray);
+                img = Image.FromStream(ms);
+                ms.Close();
+            }
+            else
+            {
+                img = Image.FromFile("NoImage.jpg");
+            }
+            pictureBox1.Image = img;
         }
+        #endregion
         //Добавить UPDATE, настроить и проверить Insert
         #region Select
         /// <summary>
         /// Метод вывода базы данных
         /// </summary>
         /// <param name="s"> Переменная хранящая название таблицы, выбранной из древа </param>
-        void SelectFromDB(string s)
+        void SelectFromDB(string table)
         {
-            DataBaseDGV.DataSource = ProcessingRequest.Select(s, dataBase.Connection);
-            InsFields(s);
-            UpFields(s);
+            DataBaseDGV.DataSource = ProcessingRequest.Select(table, dataBase.Connection);
+            InsFields(table);
+            UpFields(table);
+            GetAllDepartmens(dataBase.Connection);
         }
         /// <summary>
         /// Метод выбора навзвания таблицы для последующего вывода 
@@ -398,8 +460,29 @@ namespace Library
             data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
             data[2] = "0"; //$"{cBIns1.SelectedIndex}";
             data[3] = $"{dtPIns1.Value.Date};{dtPIns1.Value.Date}";
-            ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
+            byte[] img = LoadPhotoToArray();
+            ProcessingRequest.Insert(dataBase.Table, data, img, dataBase.Connection);
             SelectFromDB(dataBase.Table);
+        }
+        byte[] LoadPhotoToArray()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = @"C:\";
+            openFileDialog1.Filter = "All Embroidery Files | *.bmp; *.gif; *.jpeg; *.jpg; " +
+             "*.fif;*.fiff;*.png;*.wmf;*.emf" +
+             "|Windows Bitmap (*.bmp)|*.bmp" +
+             "|JPEG File Interchange Format (*.jpg)|*.jpg;*.jpeg" +
+             "|Graphics Interchange Format (*.gif)|*.gif" +
+             "|Portable Network Graphics (*.png)|*.png" +
+             "|Tag Embroidery File Format (*.tif)|*.tif;*.tiff";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Image image = Image.FromFile(openFileDialog1.FileName);
+                MemoryStream memoryStream = new MemoryStream();
+                image.Save(memoryStream, ImageFormat.Jpeg);
+                return memoryStream.ToArray();
+            }
+            else return null;
         }
         #endregion
     }
