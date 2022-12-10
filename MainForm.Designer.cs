@@ -49,6 +49,8 @@
             this.lbIns2 = new System.Windows.Forms.Label();
             this.btnInsert = new System.Windows.Forms.Button();
             this.tPUpdate_Delete = new System.Windows.Forms.TabPage();
+            this.lbUp7 = new System.Windows.Forms.Label();
+            this.chBUp1 = new System.Windows.Forms.CheckBox();
             this.dtPUp2 = new System.Windows.Forms.DateTimePicker();
             this.dtPUp1 = new System.Windows.Forms.DateTimePicker();
             this.lbUp1 = new System.Windows.Forms.Label();
@@ -69,8 +71,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.npgsqlDataAdapter1 = new Npgsql.NpgsqlDataAdapter();
-            this.chBUp1 = new System.Windows.Forms.CheckBox();
-            this.lbUp7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
             this.tCActions.SuspendLayout();
             this.tPInsert.SuspendLayout();
@@ -139,7 +139,7 @@
             // 
             // dtPIns2
             // 
-            this.dtPIns2.Location = new System.Drawing.Point(6, 78);
+            this.dtPIns2.Location = new System.Drawing.Point(3, 78);
             this.dtPIns2.Name = "dtPIns2";
             this.dtPIns2.Size = new System.Drawing.Size(200, 22);
             this.dtPIns2.TabIndex = 25;
@@ -196,6 +196,11 @@
             // nUDIns1
             // 
             this.nUDIns1.Location = new System.Drawing.Point(659, 23);
+            this.nUDIns1.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nUDIns1.Name = "nUDIns1";
             this.nUDIns1.Size = new System.Drawing.Size(109, 22);
             this.nUDIns1.TabIndex = 19;
@@ -306,6 +311,24 @@
             this.tPUpdate_Delete.TabIndex = 1;
             this.tPUpdate_Delete.Text = "Изменение";
             this.tPUpdate_Delete.UseVisualStyleBackColor = true;
+            // 
+            // lbUp7
+            // 
+            this.lbUp7.AutoSize = true;
+            this.lbUp7.Location = new System.Drawing.Point(210, 60);
+            this.lbUp7.Name = "lbUp7";
+            this.lbUp7.Size = new System.Drawing.Size(69, 16);
+            this.lbUp7.TabIndex = 42;
+            this.lbUp7.Text = "Читатель";
+            // 
+            // chBUp1
+            // 
+            this.chBUp1.AutoSize = true;
+            this.chBUp1.Location = new System.Drawing.Point(230, 82);
+            this.chBUp1.Name = "chBUp1";
+            this.chBUp1.Size = new System.Drawing.Size(18, 17);
+            this.chBUp1.TabIndex = 41;
+            this.chBUp1.UseVisualStyleBackColor = true;
             // 
             // dtPUp2
             // 
@@ -481,24 +504,6 @@
             this.npgsqlDataAdapter1.InsertCommand = null;
             this.npgsqlDataAdapter1.SelectCommand = null;
             this.npgsqlDataAdapter1.UpdateCommand = null;
-            // 
-            // chBUp1
-            // 
-            this.chBUp1.AutoSize = true;
-            this.chBUp1.Location = new System.Drawing.Point(230, 82);
-            this.chBUp1.Name = "chBUp1";
-            this.chBUp1.Size = new System.Drawing.Size(18, 17);
-            this.chBUp1.TabIndex = 41;
-            this.chBUp1.UseVisualStyleBackColor = true;
-            // 
-            // lbUp7
-            // 
-            this.lbUp7.AutoSize = true;
-            this.lbUp7.Location = new System.Drawing.Point(210, 60);
-            this.lbUp7.Name = "lbUp7";
-            this.lbUp7.Size = new System.Drawing.Size(69, 16);
-            this.lbUp7.TabIndex = 42;
-            this.lbUp7.Text = "Читатель";
             // 
             // MainForm
             // 

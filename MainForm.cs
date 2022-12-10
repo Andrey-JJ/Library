@@ -41,6 +41,8 @@ namespace Library
         }
         void GetAllDepartmens(NpgsqlConnection connection)
         {
+            cBIns1.Items.Clear();
+            cBUp1.Items.Clear();
             DataTable dt = ProcessingRequest.SelectAllDeps(connection);
             if(dt.Rows.Count > 0)
             {
@@ -402,10 +404,7 @@ namespace Library
                 img = Image.FromStream(ms);
                 ms.Close();
             }
-            else
-            {
-                img = Image.FromFile("NoImage.jpg");
-            }
+            else img = Image.FromFile("NoImage.png");
             pictureBox1.Image = img;
         }
         #endregion
@@ -458,12 +457,22 @@ namespace Library
             string[] data = new string[4];
             data[0] = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
             data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
-            data[2] = "0"; //$"{cBIns1.SelectedIndex}";
+            data[2] = $"{cBIns1.SelectedIndex}";
             data[3] = $"{dtPIns1.Value.Date};{dtPIns1.Value.Date}";
-            byte[] img = LoadPhotoToArray();
+            byte[] img = null;
+            if (dataBase.Table == "Каталожная карточка книги") img = LoadPhotoToArray();
             ProcessingRequest.Insert(dataBase.Table, data, img, dataBase.Connection);
             SelectFromDB(dataBase.Table);
         }
+        #endregion
+        #region Update
+
+        #endregion
+        #region Dop methods
+        /// <summary>
+        /// Функция загрузки изображения в byte массив
+        /// </summary>
+        /// <returns> Возвращает массив байт полученный из изображения </returns>
         byte[] LoadPhotoToArray()
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();

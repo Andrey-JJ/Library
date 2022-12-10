@@ -23,6 +23,7 @@ namespace Library
             this.ConnectionToDB = conn;
             Connection = new NpgsqlConnection(conn);
         }
+        #region Select functions
         /// <summary>
         /// Функция для получения выбранной в древе таблицы
         /// </summary>
@@ -91,7 +92,12 @@ namespace Library
             catch { }
             return dt;
         }
-        
+        /// <summary>
+        /// Функция для вывода изображения книги по id 
+        /// </summary>
+        /// <param name="id"> Переменная хранящая </param>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public static DataTable SelectImage(int id, NpgsqlConnection connection)
         {
             DataTable dt = new DataTable();
@@ -105,6 +111,7 @@ namespace Library
             catch { }
             return dt;
         }
+        #endregion
         /// <summary>
         /// Функция удаления данных из выбранной таблицы
         /// </summary>
@@ -150,7 +157,6 @@ namespace Library
         public static void Insert(string table, string[] data, byte[] img, NpgsqlConnection connection)
         {
             string commandText = "";
-            //bool cardHaveBooks = false;
             string[] textboxes = data[0].Split(';');
             string[] numerics = data[1].Split(';');
             string book = textboxes[0] + ";" + numerics[1];
@@ -184,7 +190,6 @@ namespace Library
                     NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
                     if(table == "Каталожная карточка книги") command.Parameters.Add(parameter);
                     command.ExecuteNonQuery();
-                    //if (cardHaveBooks) Insert_book(book, connection);
                 }
                 catch { MessageBox.Show($"Не удалось добавить данные в таблицу {table}.\n Введены не корректные данные."); }
             }
