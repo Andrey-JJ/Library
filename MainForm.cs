@@ -39,6 +39,10 @@ namespace Library
             catch { MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные."); }
             bdTableTree.ExpandAll();
         }
+        /// <summary>
+        /// Метод вывода списка всех отделов библиотеки
+        /// </summary>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
         void GetAllDepartmens(NpgsqlConnection connection)
         {
             cBIns1.Items.Clear();
@@ -146,7 +150,7 @@ namespace Library
         /// Метод отображения полей для заполнения таблиц
         /// </summary>
         /// <param name="table"> Переменная хранящая значение выбранной таблицы </param>
-        void InsFields(string table)
+        void InsertPage(string table)
         {
             switch (table)
             {
@@ -167,6 +171,7 @@ namespace Library
                     //non visible
                     dtPIns1.Visible = false;
                     dtPIns2.Visible = false;
+                    btnInsImg.Visible = false;
                     break;
                 case "Каталожная карточка книги":
                     //visible
@@ -182,6 +187,7 @@ namespace Library
                     cBIns1.Visible = true;
                     lbIns6.Text = "Кол-во книг"; lbIns6.Visible = true;
                     nUDIns2.Visible = true;
+                    btnInsImg.Visible = true;
                     //non visible
                     dtPIns1.Visible = false;
                     dtPIns2.Visible = false;
@@ -203,6 +209,7 @@ namespace Library
                     cBIns1.Visible = false;
                     nUDIns1.Visible = false;
                     nUDIns2.Visible = false;
+                    btnInsImg.Visible = false;
                     break;
                 case "Отдел":
                     //visible
@@ -221,6 +228,7 @@ namespace Library
                     nUDIns2.Visible = false;
                     dtPIns2.Visible = false;
                     lbIns6.Visible = false;
+                    btnInsImg.Visible = false;
                     break;
                 case "Абонент":
                     //visible
@@ -240,6 +248,7 @@ namespace Library
                     nUDIns2.Visible = false;
                     cBIns1.Visible = false;
                     dtPIns2.Visible = false;
+                    btnInsImg.Visible = false;
                     break;
                 case "Библиотекарь":
                     //visible
@@ -259,6 +268,7 @@ namespace Library
                     nUDIns2.Visible = false;
                     cBIns1.Visible = false;
                     dtPIns2.Visible = false;
+                    btnInsImg.Visible = false;
                     break;
             }
         }
@@ -266,7 +276,7 @@ namespace Library
         /// Метод отображения полей для обновления таблиц
         /// </summary>
         /// <param name="table"> Переменная хранящая значение выбранной таблицы </param>
-        void UpFields(string table)
+        void UpdatePage(string table)
         {
             switch (table)
             {
@@ -394,18 +404,8 @@ namespace Library
         #region Image
         private void DataBaseDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = e.RowIndex; 
-            DataTable dt = ProcessingRequest.SelectImage(id, dataBase.Connection);
-            Image img = null; 
-            if (dt != null)
-            {
-                byte[] imageArray = (byte[])dt.Rows[0][0];
-                var ms = new MemoryStream(imageArray);
-                img = Image.FromStream(ms);
-                ms.Close();
-            }
-            else img = Image.FromFile("NoImage.png");
-            pictureBox1.Image = img;
+            int id = e.RowIndex;
+            SelectImg(id);
         }
         #endregion
         //Добавить UPDATE, настроить и проверить Insert
@@ -417,8 +417,8 @@ namespace Library
         void SelectFromDB(string table)
         {
             DataBaseDGV.DataSource = ProcessingRequest.Select(table, dataBase.Connection);
-            InsFields(table);
-            UpFields(table);
+            InsertPage(table);
+            UpdatePage(table);
             GetAllDepartmens(dataBase.Connection);
         }
         /// <summary>
@@ -428,6 +428,24 @@ namespace Library
         {
             dataBase.Table = e.Node.Text;
             if (dataBase.Table != "Таблицы данных: ") SelectFromDB(dataBase.Table);
+        }
+        /// <summary>
+        /// Метод вывода изображения в picturebox
+        /// </summary>
+        /// <param name="id"> Переменная хранящая id выбранной строки</param>
+        void SelectImg(int id)
+        {
+            DataTable dt = ProcessingRequest.SelectImage(id, dataBase.Connection);
+            Image img = null;
+            byte[] imageArray = (byte[])dt.Rows[0][0];
+            if (imageArray != null)
+            {
+                var ms = new MemoryStream(imageArray);
+                img = Image.FromStream(ms);
+                ms.Close();
+            }
+            else img = Image.FromFile("NoImage.png");
+            pictureBox1.Image = img;
         }
         #endregion
         #region Delete
@@ -459,10 +477,22 @@ namespace Library
             data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
             data[2] = $"{cBIns1.SelectedIndex}";
             data[3] = $"{dtPIns1.Value.Date};{dtPIns1.Value.Date}";
-            byte[] img = null;
-            if (dataBase.Table == "Каталожная карточка книги") img = LoadPhotoToArray();
-            ProcessingRequest.Insert(dataBase.Table, data, img, dataBase.Connection);
+            ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
             SelectFromDB(dataBase.Table);
+        }
+        /// <summary>
+        /// Обработчик кнопки добавления изображения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnInsImg_Click(object sender, EventArgs e)
+        {
+            if(dataBase.Table == "Каталожная карточка книги")
+            {
+                int id = DataBaseDGV.CurrentRow.Index;
+                byte[] img = LoadPhotoToArray();
+                ProcessingRequest.UpdateImg(id, img, dataBase.Connection);
+            }
         }
         #endregion
         #region Update

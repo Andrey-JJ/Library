@@ -154,7 +154,7 @@ namespace Library
         /// </summary>
         /// <param name="commandText"> Переменная хранящая команду для добавления </param>
         /// <param name="connection"> Переменная подключения к базе данных </param>
-        public static void Insert(string table, string[] data, byte[] img, NpgsqlConnection connection)
+        public static void Insert(string table, string[] data, NpgsqlConnection connection)
         {
             string commandText = "";
             string[] textboxes = data[0].Split(';');
@@ -167,13 +167,11 @@ namespace Library
             }
             else
             {
-                NpgsqlParameter parameter = new NpgsqlParameter("@photo", DbType.Binary);
                 int comboboxes = Int32.Parse(data[2]);
                 switch (table)
                 {
                     case "Каталожная карточка книги":
-                        commandText = $"insert into book_card (book_name, book_edit, book_author, book_vol, dep_id, book_img) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}', '{Int32.Parse(numerics[0])}', '{comboboxes}', @photo)";
-                        parameter.Value = img;
+                        commandText = $"insert into card (book_name, book_edit, book_author, book_vol, dep_id) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}', '{Int32.Parse(numerics[0])}', '{comboboxes}')";
                         break;
                     case "Отдел":
                         commandText = $"insert into department (dep_name) values ('{textboxes[0]}')";
@@ -188,7 +186,6 @@ namespace Library
                 try
                 {
                     NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
-                    if(table == "Каталожная карточка книги") command.Parameters.Add(parameter);
                     command.ExecuteNonQuery();
                 }
                 catch { MessageBox.Show($"Не удалось добавить данные в таблицу {table}.\n Введены не корректные данные."); }
@@ -221,6 +218,30 @@ namespace Library
                 catch { } //MessageBox.Show($"Не возможно добавить значения в таблицы из-за указаных вами данных.");
             }
             else MessageBox.Show("Внимание!\nНевозможно добавить книги, если указанное кол-во равно или меньше 0.");
+        }
+        /// <summary>
+        /// Функция добавления или изменения изображения в таблице каталожной карточки
+        /// </summary>
+        /// <param name="id"> Переменная хранящая id выбранной записи </param>
+        /// <param name="img"> Массив byte хранящий в себе изображение, выбранное пользователем </param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        public static void UpdateImg(int id, byte[] img, NpgsqlConnection connection)
+        {
+            try
+            {
+                string commandText = $"update card set book_img = @photo  where card.id = '{id}'";
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                NpgsqlParameter parameter = new NpgsqlParameter("@photo", DbType.Binary);
+                parameter.Value = img;
+                command.Parameters.Add(parameter);
+                command.ExecuteNonQuery();
+            }
+            catch { }
+        }
+
+        public void Update(string table, int id, string[] data, NpgsqlConnection connection)
+        {
+
         }
         /// <summary>
         /// Метод получения id каталожной карточки по названию

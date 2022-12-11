@@ -47,7 +47,7 @@
             this.lbIns3 = new System.Windows.Forms.Label();
             this.tBIns1 = new System.Windows.Forms.TextBox();
             this.lbIns2 = new System.Windows.Forms.Label();
-            this.btnInsert = new System.Windows.Forms.Button();
+            this.btnInsImg = new System.Windows.Forms.Button();
             this.tPUpdate_Delete = new System.Windows.Forms.TabPage();
             this.lbUp7 = new System.Windows.Forms.Label();
             this.chBUp1 = new System.Windows.Forms.CheckBox();
@@ -71,6 +71,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.npgsqlDataAdapter1 = new Npgsql.NpgsqlDataAdapter();
+            this.btnInsert = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
             this.tCActions.SuspendLayout();
             this.tPInsert.SuspendLayout();
@@ -114,6 +115,7 @@
             // 
             // tPInsert
             // 
+            this.tPInsert.Controls.Add(this.btnInsert);
             this.tPInsert.Controls.Add(this.dtPIns2);
             this.tPInsert.Controls.Add(this.dtPIns1);
             this.tPInsert.Controls.Add(this.lbIns1);
@@ -128,7 +130,7 @@
             this.tPInsert.Controls.Add(this.lbIns3);
             this.tPInsert.Controls.Add(this.tBIns1);
             this.tPInsert.Controls.Add(this.lbIns2);
-            this.tPInsert.Controls.Add(this.btnInsert);
+            this.tPInsert.Controls.Add(this.btnInsImg);
             this.tPInsert.Location = new System.Drawing.Point(4, 25);
             this.tPInsert.Name = "tPInsert";
             this.tPInsert.Padding = new System.Windows.Forms.Padding(3);
@@ -274,15 +276,15 @@
             this.lbIns2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
             this.lbIns2.MouseHover += new System.EventHandler(this.OnMouseHover);
             // 
-            // btnInsert
+            // btnInsImg
             // 
-            this.btnInsert.Location = new System.Drawing.Point(758, 90);
-            this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(173, 41);
-            this.btnInsert.TabIndex = 11;
-            this.btnInsert.Text = "Выполнить";
-            this.btnInsert.UseVisualStyleBackColor = true;
-            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            this.btnInsImg.Location = new System.Drawing.Point(737, 90);
+            this.btnInsImg.Name = "btnInsImg";
+            this.btnInsImg.Size = new System.Drawing.Size(194, 41);
+            this.btnInsImg.TabIndex = 11;
+            this.btnInsImg.Text = "Добавить изображение";
+            this.btnInsImg.UseVisualStyleBackColor = true;
+            this.btnInsImg.Click += new System.EventHandler(this.btnInsImg_Click);
             // 
             // tPUpdate_Delete
             // 
@@ -505,6 +507,16 @@
             this.npgsqlDataAdapter1.SelectCommand = null;
             this.npgsqlDataAdapter1.UpdateCommand = null;
             // 
+            // btnInsert
+            // 
+            this.btnInsert.Location = new System.Drawing.Point(558, 90);
+            this.btnInsert.Name = "btnInsert";
+            this.btnInsert.Size = new System.Drawing.Size(173, 41);
+            this.btnInsert.TabIndex = 26;
+            this.btnInsert.Text = "Добавить запись";
+            this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -541,7 +553,7 @@
         private System.Windows.Forms.TabPage tPAdditional;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button btnInsert;
+        private System.Windows.Forms.Button btnInsImg;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.NumericUpDown nUDIns2;
@@ -575,6 +587,7 @@
         private Npgsql.NpgsqlDataAdapter npgsqlDataAdapter1;
         private System.Windows.Forms.CheckBox chBUp1;
         private System.Windows.Forms.Label lbUp7;
+        private System.Windows.Forms.Button btnInsert;
     }
 }
 
