@@ -21,7 +21,7 @@ namespace Library
             InitializeComponent();
             AfterLoadForm();
         }
-        ProcessingRequest dataBase; //Элемент класса для работы с базой данных
+        public DataBaseProcessing dataBase; //Элемент класса для работы с базой данных
         /// <summary>
         /// Метод начала работы с базой данных
         /// </summary>
@@ -29,7 +29,7 @@ namespace Library
         {
             GetTablesForTree();
             UserConnection user = new UserConnection("UserPig", "masterkey");
-            dataBase = new ProcessingRequest(user.OpenConnection());
+            dataBase = new DataBaseProcessing(user.OpenConnection());
             try
             {
                 dataBase.Connection.Open();
@@ -43,11 +43,13 @@ namespace Library
         /// Метод вывода списка всех отделов библиотеки
         /// </summary>
         /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
-        void GetAllDepartmens(NpgsqlConnection connection)
+        void GetAllForComboBoxes(NpgsqlConnection connection)
         {
             cBIns1.Items.Clear();
             cBUp1.Items.Clear();
-            DataTable dt = ProcessingRequest.SelectAllDeps(connection);
+            cBDop1.Items.Clear();
+            //Получение отделов
+            DataTable dt = DataBaseProcessing.SelectAllDeps(connection);
             if(dt.Rows.Count > 0)
             {
                 for(int i = 0; i < dt.Rows.Count; i++)
@@ -56,6 +58,11 @@ namespace Library
                     cBUp1.Items.Add(dt.Rows[i][0].ToString());
                 }
             }
+            //Получение пользователей
+            dt = DataBaseProcessing.SelectAllSubscribers(connection);
+            if (dt.Rows.Count > 0)
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    cBDop1.Items.Add(dt.Rows[i][0].ToString());
         }
         /// <summary>
         /// Метод заполнения древа
@@ -74,7 +81,7 @@ namespace Library
         }
         #endregion
         //UI Закончено?
-        #region Label Helpers
+        #region UI/Fields
         //Подчеркивание Label при наведении
         private void OnMouseEnter(object sender, EventArgs e) 
         {
@@ -144,10 +151,8 @@ namespace Library
             }
             return temp;
         }
-        #endregion
-        #region Fields Helpers
         /// <summary>
-        /// Метод отображения полей для заполнения таблиц
+        /// Функция отображения полей для заполнения таблиц
         /// </summary>
         /// <param name="table"> Переменная хранящая значение выбранной таблицы </param>
         void InsertPage(string table)
@@ -273,7 +278,7 @@ namespace Library
             }
         }
         /// <summary>
-        /// Метод отображения полей для обновления таблиц
+        /// Функция отображения полей для обновления таблиц
         /// </summary>
         /// <param name="table"> Переменная хранящая значение выбранной таблицы </param>
         void UpdatePage(string table)
@@ -294,8 +299,6 @@ namespace Library
                     cBUp1.Visible = true;
                     lbUp6.Text = "Кол-во книг"; lbUp6.Visible = true;
                     nUDUp2.Visible = true;
-                    lbUp7.Visible = true;
-                    chBUp1.Visible = true;
                     //non visible
                     dtPUp1.Visible = false;
                     dtPUp2.Visible = false;
@@ -317,7 +320,6 @@ namespace Library
                     //non visible
                     dtPUp1.Visible = false;
                     dtPUp2.Visible = false;
-                    lbUp7.Visible = false;
                     break;
                 case "Выдача":
                     //visible
@@ -336,7 +338,6 @@ namespace Library
                     cBUp1.Visible = false;
                     nUDUp1.Visible = false;
                     nUDUp2.Visible = false;
-                    lbUp7.Visible = false;
                     break;
                 case "Отдел":
                     //visible
@@ -355,7 +356,6 @@ namespace Library
                     lbUp6.Visible = false;
                     nUDUp2.Visible = false;
                     dtPUp2.Visible = false;
-                    lbUp7.Visible = false;
                     break;
                 case "Абонент":
                     //visible
@@ -375,7 +375,6 @@ namespace Library
                     nUDUp2.Visible = false;
                     cBUp1.Visible = false;
                     dtPUp2.Visible = false;
-                    lbUp7.Visible = false;
                     break;
                 case "Библиотекарь":
                     //visible
@@ -395,20 +394,63 @@ namespace Library
                     nUDUp2.Visible = false;
                     cBUp1.Visible = false;
                     dtPUp2.Visible = false;
-                    lbUp7.Visible = false;
+                    break;
+            }
+        }
+        /// <summary>
+        /// Функция получения данных из выбранной строки таблицы
+        /// </summary>
+        void GetInfoForUpdate()
+        {
+            switch (dataBase.Table)
+            {
+                case "Каталожная карточка книги":
+                    tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
+                    tBUp2.Text = DataBaseDGV.CurrentRow.Cells[1].Value.ToString();
+                    tBUp3.Text = DataBaseDGV.CurrentRow.Cells[2].Value.ToString();
+                    nUDUp1.Value = Int32.Parse(DataBaseDGV.CurrentRow.Cells[3].Value.ToString());
+                    cBUp1.SelectedIndex = DataBaseProcessing.GetDepId(DataBaseDGV.CurrentRow.Cells[4].Value.ToString(), dataBase.Connection);
+                    break;
+                case "Выдача":
+                    tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
+                    tBUp2.Text = DataBaseDGV.CurrentRow.Cells[1].Value.ToString();
+                    tBUp3.Text = DataBaseDGV.CurrentRow.Cells[2].Value.ToString();
+                    dtPUp1.Value = (DateTime)DataBaseDGV.CurrentRow.Cells[3].Value;
+                    dtPUp2.Value = (DateTime)DataBaseDGV.CurrentRow.Cells[4].Value;
+                    break;
+                case "Отдел":
+                    tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
+                    break;
+                case "Абонент":
+                    tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
+                    tBUp2.Text = DataBaseDGV.CurrentRow.Cells[1].Value.ToString();
+                    tBUp3.Text = DataBaseDGV.CurrentRow.Cells[2].Value.ToString();
+                    break;
+                case "Библиотекарь":
+                    tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
+                    tBUp2.Text = DataBaseDGV.CurrentRow.Cells[1].Value.ToString();
+                    tBUp3.Text = DataBaseDGV.CurrentRow.Cells[2].Value.ToString();
                     break;
             }
         }
         #endregion
-        //Добавить картинки и их вывод
+        //Добавить изображения
         #region Image
+        /// <summary>
+        /// Функция вывода изображения и заполнения полей при выборе записи из таблицы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DataBaseDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = e.RowIndex;
-            SelectImg(id);
+            if(dataBase.Table == "Каталожная карточка книги")
+            {
+                int id = e.RowIndex;
+                SelectImg(id);
+            }
+            GetInfoForUpdate();
         }
         #endregion
-        //Добавить UPDATE, настроить и проверить Insert
         #region Select
         /// <summary>
         /// Метод вывода базы данных
@@ -416,10 +458,10 @@ namespace Library
         /// <param name="s"> Переменная хранящая название таблицы, выбранной из древа </param>
         void SelectFromDB(string table)
         {
-            DataBaseDGV.DataSource = ProcessingRequest.Select(table, dataBase.Connection);
+            DataBaseDGV.DataSource = DataBaseProcessing.Select(table, dataBase.Connection);
             InsertPage(table);
             UpdatePage(table);
-            GetAllDepartmens(dataBase.Connection);
+            GetAllForComboBoxes(dataBase.Connection);
         }
         /// <summary>
         /// Метод выбора навзвания таблицы для последующего вывода 
@@ -435,11 +477,11 @@ namespace Library
         /// <param name="id"> Переменная хранящая id выбранной строки</param>
         void SelectImg(int id)
         {
-            DataTable dt = ProcessingRequest.SelectImage(id, dataBase.Connection);
+            DataTable dt = DataBaseProcessing.SelectImage(id, dataBase.Connection);
             Image img = null;
-            byte[] imageArray = (byte[])dt.Rows[0][0];
-            if (imageArray != null)
+            if (dt != null)
             {
+                byte[] imageArray = (byte[])dt.Rows[0][0];
                 var ms = new MemoryStream(imageArray);
                 img = Image.FromStream(ms);
                 ms.Close();
@@ -459,7 +501,7 @@ namespace Library
             if(DataBaseDGV.CurrentRow != null)
             {
                 int id = DataBaseDGV.CurrentRow.Index;
-                ProcessingRequest.Delete(id, dataBase.Table, dataBase.Connection);
+                DataBaseProcessing.Delete(id, dataBase.Table, dataBase.Connection);
                 SelectFromDB(dataBase.Table);
             }
         }
@@ -477,7 +519,7 @@ namespace Library
             data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
             data[2] = $"{cBIns1.SelectedIndex}";
             data[3] = $"{dtPIns1.Value.Date};{dtPIns1.Value.Date}";
-            ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
+            DataBaseProcessing.Insert(dataBase.Table, data, dataBase.Connection);
             SelectFromDB(dataBase.Table);
         }
         /// <summary>
@@ -487,16 +529,27 @@ namespace Library
         /// <param name="e"></param>
         private void btnInsImg_Click(object sender, EventArgs e)
         {
-            if(dataBase.Table == "Каталожная карточка книги")
-            {
-                int id = DataBaseDGV.CurrentRow.Index;
-                byte[] img = LoadPhotoToArray();
-                ProcessingRequest.UpdateImg(id, img, dataBase.Connection);
-            }
+            int id = DataBaseDGV.CurrentRow.Index;
+            byte[] img = LoadPhotoToArray();
+            DataBaseProcessing.UpdateImg(id, img, dataBase.Connection);
         }
         #endregion
         #region Update
-
+        /// <summary>
+        /// Обработчик кнопки изменения записи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            int id = DataBaseDGV.CurrentRow.Index;
+            string[] data = new string[4];
+            data[0] = $"{tBUp1.Text};{tBUp2.Text};{tBUp3.Text}";
+            data[1] = $"{Int32.Parse(nUDUp1.Value.ToString())};{Int32.Parse(nUDUp2.Value.ToString())}";
+            data[2] = $"{cBUp1.SelectedIndex}";
+            data[3] = $"{dtPUp1.Value.Date};{dtPUp1.Value.Date}";
+            DataBaseProcessing.Update(dataBase.Table, id, data, dataBase.Connection);
+        }
         #endregion
         #region Dop methods
         /// <summary>
@@ -523,6 +576,22 @@ namespace Library
             }
             else return null;
         }
+        /// <summary>
+        /// Обработчик формы вывода списка логов программы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button3_Click(object sender, EventArgs e)
+        {
+            LogsForm form = new LogsForm(dataBase.Connection);
+            form.Show();
+        }
+        /// <summary>
+        /// Обработчик кнопки закрытия приложения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClose_Click(object sender, EventArgs e) => Application.Exit();
         #endregion
     }
 }

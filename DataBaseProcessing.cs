@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Library
 {
-    internal class ProcessingRequest
+    public class DataBaseProcessing
     {
         string ConnectionToDB { get; } //Строка подключения к базе данных
         public NpgsqlConnection Connection { get; } //Переменная для подключение к базе данных
@@ -18,7 +18,7 @@ namespace Library
         /// Конструктор класса работы с базой данных
         /// </summary>
         /// <param name="conn"> Переменная хранящая строку подключения к базе данных </param>
-        public ProcessingRequest(string conn) 
+        public DataBaseProcessing(string conn) 
         {
             this.ConnectionToDB = conn;
             Connection = new NpgsqlConnection(conn);
@@ -78,7 +78,11 @@ namespace Library
             catch { MessageBox.Show("Неверно указано название таблицы."); }
             return dt;
         }
-        
+        /// <summary>
+        /// Метод вывода списка всех отделов в базе данных
+        /// </summary>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращаемое значение это таблица, полученная в результате работы запроса </returns>
         public static DataTable SelectAllDeps(NpgsqlConnection connection)
         {
             DataTable dt = new DataTable();
@@ -120,14 +124,16 @@ namespace Library
         /// <param name="connection"> Переменная подключения к базе данных </param>
         public static void Delete(int id, string tableinfo, NpgsqlConnection connection) 
         {
+            bool flag = false;
             string commandText = "";
             switch (tableinfo)
             {
                 case "Экземпляр книги":
                     commandText = $"delete from book where id = {id}";
+                    MessageBox.Show($"Внимание будет списана книга, которая может находиться в выдаче! \nНомер книги {id}", "Предупреждение", MessageBoxButtons.OK);
                     break;
                 case "Каталожная карточка книги":
-                    commandText = $"delete from book_card where id = {id}";
+                    commandText = $"delete from card where id = {id}";
                     break;
                 case "Выдача":
                     commandText = $"delete from book_issue where id = {id}";
@@ -143,11 +149,31 @@ namespace Library
                     break;
             }
             try
-            { 
+            {
                 NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
                 command.ExecuteNonQuery();
             }
             catch { }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="connection"></param>
+        /// <returns></returns>
+        static bool CheckBooks(int id, NpgsqlConnection connection)
+        {
+            bool temp = false;
+            DataTable dt = new DataTable();
+            string commandText = $"select top(1) from card where book_name = ";
+            try
+            {
+                NpgsqlCommand getCardId = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = getCardId.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            return temp;
         }
         /// <summary>
         /// Функция добавления во все таблицы, кроме экземпляра книги и выдачи
@@ -164,6 +190,12 @@ namespace Library
             else if (table == "Выдача")
             {
                 string[] datepickers = data[4].Split(';');
+                DataTable dt = GetCardId(textboxes[0], connection);
+                int cardid = Int32.Parse((string)dt.Rows[0][0]);
+                int bookid = GetBookId(cardid, connection);
+                //Выборка читателя
+                //Выборка библиотекаря
+                commandText = $"insert into boo_issue (book_id, sub_id, lib_id, is_date, is_rdate) values ({bookid}, subid, libid, @date1, @date2)";
             }
             else
             {
@@ -177,10 +209,10 @@ namespace Library
                         commandText = $"insert into department (dep_name) values ('{textboxes[0]}')";
                         break;
                     case "Абонент":
-                        commandText = $"insert int subscriber (sub_lastname, sub_name, sub_midname) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}')";
+                        commandText = $"insert into subscriber (sub_lastname, sub_name, sub_midname) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}')";
                         break;
                     case "Библиотекарь":
-                        commandText = $"insert int librarian (lib_lastname, lib_name, lib_midname) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}')";
+                        commandText = $"insert into librarian (lib_lastname, lib_name, lib_midname) values ('{textboxes[0]}', '{textboxes[1]}', '{textboxes[2]}')";
                         break;
                 }
                 try
@@ -238,17 +270,47 @@ namespace Library
             }
             catch { }
         }
-
-        public void Update(string table, int id, string[] data, NpgsqlConnection connection)
+        /// <summary>
+        /// Функция обновления выбранной записи
+        /// </summary>
+        /// <param name="table"> Переменная хранящая название выбранной таблицы </param>
+        /// <param name="id"> Переменная хранящая id выбранной записи</param>
+        /// <param name="data"> Массив хранящий данные для обновления записи</param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        public static void Update(string table, int id, string[] data, NpgsqlConnection connection)
         {
-
+            string commandText = "";
+            string[] textboxes = data[0].Split(';');
+            string[] numerics = data[1].Split(';');
+            int comboboxes = Int32.Parse(data[2]);
+            switch (table)
+            {
+                case "Каталожная карточка книги":
+                    commandText = $"update card set book_name = '{textboxes[0]}', book_edit = '{textboxes[1]}', book_author = '{textboxes[2]}', book_vol = '{Int32.Parse(numerics[0])}', dep_id = '{comboboxes}' where card.id = '{id}'";
+                    break;
+                case "Отдел":
+                    commandText = $"update department set dep_name '{textboxes[0]}' where department.id = '{id}'";
+                    break;
+                case "Абонент":
+                    commandText = $"update subscriber set sub_lastname = '{textboxes[0]}', sub_name = '{textboxes[1]}', sub_midname = '{textboxes[2]}' where subscriber.id = '{id}'";
+                    break;
+                case "Библиотекарь":
+                    commandText = $"update librarian set lib_lastname = '{textboxes[0]}', lib_name = '{textboxes[1]}', lib_midname = '{textboxes[2]}' where librarian.id = '{id}'";
+                    break;
+            }
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                command.ExecuteNonQuery();
+            }
+            catch { MessageBox.Show($"Не удалось добавить данные в таблицу {table}.\n Введены не корректные данные."); }
         }
         /// <summary>
         /// Метод получения id каталожной карточки по названию
         /// </summary>
         /// <param name="name"> Переменная хранящая название книги </param>
         /// <param name="connection"> Переменная подключения к базе данных </param>
-        /// <returns></returns>
+        /// <returns> Возвращает полученное id в ходе выполнения запроса </returns>
         static DataTable GetCardId(string name, NpgsqlConnection connection)
         {
             DataTable dt = new DataTable();
@@ -262,5 +324,119 @@ namespace Library
             catch { }
             return dt;
         }
+        /// <summary>
+        /// Метод для получения id свободной книги
+        /// </summary>
+        /// <param name="cardid"> Переменная хранящая id выбранной каталожной карточки </param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns></returns>
+        static int GetBookId(int cardid, NpgsqlConnection connection)
+        {
+            int id = 0;
+            DataTable dt = new DataTable();
+            string commandText = $"select id from book where book.card_id = {cardid} and book.book_sub = 'false' limit 1";
+            try
+            {
+                NpgsqlCommand getCardId = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = getCardId.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            id = Int32.Parse((string)dt.Rows[0][0]);
+            return id;
+        }
+
+        static int GetSubId(string sub, NpgsqlConnection connection)
+        {
+            int id = 0;
+            DataTable dt = new DataTable();
+            string commandText = $"select id from subscriber where sub_lastname = 'Орехов' and sub_name = 'Андрей' and sub_midname = 'Александрович'";
+            try
+            {
+                NpgsqlCommand getCardId = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = getCardId.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            id = Int32.Parse((string)dt.Rows[0][0]);
+            return id;
+        }
+        /// <summary>
+        /// Функция для получения id выбранного отдела
+        /// </summary>
+        /// <param name="name"> Переменная хранящая название отдела </param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращает полученное id в ходе выполнения запроса </returns>
+        public static int GetDepId(string name, NpgsqlConnection connection)
+        {
+            int depId = 0;
+            DataTable dt = new DataTable();
+            string commandText = $"select id from department where department.dep_name = '{name}'";
+            try
+            {
+                NpgsqlCommand getDepId = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = getDepId.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            depId = (int)dt.Rows[0][0];
+            return depId;
+        }
+        /// <summary>
+        /// Функция для получения всех читателей
+        /// </summary>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращаемое значение это таблица, полученная в результате работы запроса </returns>
+        public static DataTable SelectAllSubscribers(NpgsqlConnection connection)
+        {
+            DataTable dt = new DataTable();
+            string commandText = "select (sub_lastname || ' ' || sub_name || ' ' || sub_midname) from subscriber order by id";
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            return dt;
+        }
+        /// <summary>
+        /// Метод получения списка названия всех книг
+        /// </summary>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращаемое значение это таблица, полученная в результате работы запроса </returns>
+        public static DataTable SelectAllBooks(NpgsqlConnection connection) 
+        {       
+            DataTable dt = new DataTable();
+            string commandText = "select book_name from card order by id";
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            return dt;
+        }
+        /// <summary>
+        /// Метод вывода всех логов базы данных
+        /// </summary>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращаемое значение это таблица, полученная в результате работы запроса </returns>
+        public static DataTable SelectLogs(NpgsqlConnection connection)
+        {
+            DataTable dt = new DataTable();
+            string commandText = "select * from audit";
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            return dt;
+        }
+
+       
     }
 }

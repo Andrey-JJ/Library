@@ -33,6 +33,7 @@
             this.bdTableTree = new System.Windows.Forms.TreeView();
             this.tCActions = new System.Windows.Forms.TabControl();
             this.tPInsert = new System.Windows.Forms.TabPage();
+            this.btnInsert = new System.Windows.Forms.Button();
             this.dtPIns2 = new System.Windows.Forms.DateTimePicker();
             this.dtPIns1 = new System.Windows.Forms.DateTimePicker();
             this.lbIns1 = new System.Windows.Forms.Label();
@@ -49,8 +50,6 @@
             this.lbIns2 = new System.Windows.Forms.Label();
             this.btnInsImg = new System.Windows.Forms.Button();
             this.tPUpdate_Delete = new System.Windows.Forms.TabPage();
-            this.lbUp7 = new System.Windows.Forms.Label();
-            this.chBUp1 = new System.Windows.Forms.CheckBox();
             this.dtPUp2 = new System.Windows.Forms.DateTimePicker();
             this.dtPUp1 = new System.Windows.Forms.DateTimePicker();
             this.lbUp1 = new System.Windows.Forms.Label();
@@ -68,10 +67,15 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.tPAdditional = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
+            this.cBDop1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.npgsqlDataAdapter1 = new Npgsql.NpgsqlDataAdapter();
-            this.btnInsert = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
             this.tCActions.SuspendLayout();
             this.tPInsert.SuspendLayout();
@@ -80,6 +84,7 @@
             this.tPUpdate_Delete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp1)).BeginInit();
+            this.tPAdditional.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,9 +144,19 @@
             this.tPInsert.Text = "Добавление";
             this.tPInsert.UseVisualStyleBackColor = true;
             // 
+            // btnInsert
+            // 
+            this.btnInsert.Location = new System.Drawing.Point(558, 90);
+            this.btnInsert.Name = "btnInsert";
+            this.btnInsert.Size = new System.Drawing.Size(173, 41);
+            this.btnInsert.TabIndex = 26;
+            this.btnInsert.Text = "Добавить запись";
+            this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            // 
             // dtPIns2
             // 
-            this.dtPIns2.Location = new System.Drawing.Point(3, 78);
+            this.dtPIns2.Location = new System.Drawing.Point(6, 78);
             this.dtPIns2.Name = "dtPIns2";
             this.dtPIns2.Size = new System.Drawing.Size(200, 22);
             this.dtPIns2.TabIndex = 25;
@@ -288,8 +303,6 @@
             // 
             // tPUpdate_Delete
             // 
-            this.tPUpdate_Delete.Controls.Add(this.lbUp7);
-            this.tPUpdate_Delete.Controls.Add(this.chBUp1);
             this.tPUpdate_Delete.Controls.Add(this.dtPUp2);
             this.tPUpdate_Delete.Controls.Add(this.dtPUp1);
             this.tPUpdate_Delete.Controls.Add(this.lbUp1);
@@ -313,24 +326,6 @@
             this.tPUpdate_Delete.TabIndex = 1;
             this.tPUpdate_Delete.Text = "Изменение";
             this.tPUpdate_Delete.UseVisualStyleBackColor = true;
-            // 
-            // lbUp7
-            // 
-            this.lbUp7.AutoSize = true;
-            this.lbUp7.Location = new System.Drawing.Point(210, 60);
-            this.lbUp7.Name = "lbUp7";
-            this.lbUp7.Size = new System.Drawing.Size(69, 16);
-            this.lbUp7.TabIndex = 42;
-            this.lbUp7.Text = "Читатель";
-            // 
-            // chBUp1
-            // 
-            this.chBUp1.AutoSize = true;
-            this.chBUp1.Location = new System.Drawing.Point(230, 82);
-            this.chBUp1.Name = "chBUp1";
-            this.chBUp1.Size = new System.Drawing.Size(18, 17);
-            this.chBUp1.TabIndex = 41;
-            this.chBUp1.UseVisualStyleBackColor = true;
             // 
             // dtPUp2
             // 
@@ -372,6 +367,11 @@
             // nUDUp2
             // 
             this.nUDUp2.Location = new System.Drawing.Point(7, 79);
+            this.nUDUp2.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nUDUp2.Name = "nUDUp2";
             this.nUDUp2.Size = new System.Drawing.Size(87, 22);
             this.nUDUp2.TabIndex = 36;
@@ -391,6 +391,11 @@
             // nUDUp1
             // 
             this.nUDUp1.Location = new System.Drawing.Point(660, 24);
+            this.nUDUp1.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nUDUp1.Name = "nUDUp1";
             this.nUDUp1.Size = new System.Drawing.Size(110, 22);
             this.nUDUp1.TabIndex = 34;
@@ -470,8 +475,9 @@
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(173, 41);
             this.btnUpdate.TabIndex = 13;
-            this.btnUpdate.Text = "Изменить";
+            this.btnUpdate.Text = "Изменить запись";
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnDelete
             // 
@@ -479,18 +485,69 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(173, 41);
             this.btnDelete.TabIndex = 12;
-            this.btnDelete.Text = "Удалить";
+            this.btnDelete.Text = "Удалить запись";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // tPAdditional
             // 
+            this.tPAdditional.Controls.Add(this.button3);
+            this.tPAdditional.Controls.Add(this.cBDop1);
+            this.tPAdditional.Controls.Add(this.label1);
+            this.tPAdditional.Controls.Add(this.button2);
+            this.tPAdditional.Controls.Add(this.button1);
             this.tPAdditional.Location = new System.Drawing.Point(4, 25);
             this.tPAdditional.Name = "tPAdditional";
             this.tPAdditional.Size = new System.Drawing.Size(937, 137);
             this.tPAdditional.TabIndex = 2;
-            this.tPAdditional.Text = "Выборка";
+            this.tPAdditional.Text = "Дополнительно";
             this.tPAdditional.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(412, 64);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(230, 41);
+            this.button3.TabIndex = 41;
+            this.button3.Text = "Просмотреть журнал логов";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // cBDop1
+            // 
+            this.cBDop1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBDop1.FormattingEnabled = true;
+            this.cBDop1.Location = new System.Drawing.Point(6, 22);
+            this.cBDop1.Name = "cBDop1";
+            this.cBDop1.Size = new System.Drawing.Size(195, 24);
+            this.cBDop1.TabIndex = 38;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 16);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Выберите читателя";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(209, 64);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(197, 41);
+            this.button2.TabIndex = 28;
+            this.button2.Text = "Сформировать формуляр книги";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 64);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(197, 41);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Сформировать формуляр читателя";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -507,21 +564,22 @@
             this.npgsqlDataAdapter1.SelectCommand = null;
             this.npgsqlDataAdapter1.UpdateCommand = null;
             // 
-            // btnInsert
+            // btnClose
             // 
-            this.btnInsert.Location = new System.Drawing.Point(558, 90);
-            this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(173, 41);
-            this.btnInsert.TabIndex = 26;
-            this.btnInsert.Text = "Добавить запись";
-            this.btnInsert.UseVisualStyleBackColor = true;
-            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            this.btnClose.Location = new System.Drawing.Point(1098, 523);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(135, 41);
+            this.btnClose.TabIndex = 42;
+            this.btnClose.Text = "Выход";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1247, 576);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.DataBaseDGV);
             this.Controls.Add(this.bdTableTree);
@@ -538,6 +596,8 @@
             this.tPUpdate_Delete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDUp1)).EndInit();
+            this.tPAdditional.ResumeLayout(false);
+            this.tPAdditional.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -585,9 +645,13 @@
         private System.Windows.Forms.TextBox tBUp1;
         private System.Windows.Forms.Label lbUp2;
         private Npgsql.NpgsqlDataAdapter npgsqlDataAdapter1;
-        private System.Windows.Forms.CheckBox chBUp1;
-        private System.Windows.Forms.Label lbUp7;
         private System.Windows.Forms.Button btnInsert;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox cBDop1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnClose;
     }
 }
 
