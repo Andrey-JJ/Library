@@ -37,7 +37,7 @@
             this.dtPIns2 = new System.Windows.Forms.DateTimePicker();
             this.dtPIns1 = new System.Windows.Forms.DateTimePicker();
             this.lbIns1 = new System.Windows.Forms.Label();
-            this.cBIns1 = new System.Windows.Forms.ComboBox();
+            this.cBIns4 = new System.Windows.Forms.ComboBox();
             this.nUDIns2 = new System.Windows.Forms.NumericUpDown();
             this.lbIns6 = new System.Windows.Forms.Label();
             this.nUDIns1 = new System.Windows.Forms.NumericUpDown();
@@ -76,6 +76,10 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.npgsqlDataAdapter1 = new Npgsql.NpgsqlDataAdapter();
             this.btnClose = new System.Windows.Forms.Button();
+            this.cBIns1 = new System.Windows.Forms.ComboBox();
+            this.cBIns2 = new System.Windows.Forms.ComboBox();
+            this.cBIns3 = new System.Windows.Forms.ComboBox();
+            this.chBUp1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
             this.tCActions.SuspendLayout();
             this.tPInsert.SuspendLayout();
@@ -120,11 +124,14 @@
             // 
             // tPInsert
             // 
+            this.tPInsert.Controls.Add(this.cBIns3);
+            this.tPInsert.Controls.Add(this.cBIns2);
+            this.tPInsert.Controls.Add(this.cBIns1);
             this.tPInsert.Controls.Add(this.btnInsert);
             this.tPInsert.Controls.Add(this.dtPIns2);
             this.tPInsert.Controls.Add(this.dtPIns1);
             this.tPInsert.Controls.Add(this.lbIns1);
-            this.tPInsert.Controls.Add(this.cBIns1);
+            this.tPInsert.Controls.Add(this.cBIns4);
             this.tPInsert.Controls.Add(this.nUDIns2);
             this.tPInsert.Controls.Add(this.lbIns6);
             this.tPInsert.Controls.Add(this.nUDIns1);
@@ -182,14 +189,14 @@
             this.lbIns1.MouseLeave += new System.EventHandler(this.OnMouseLeave);
             this.lbIns1.MouseHover += new System.EventHandler(this.OnMouseHover);
             // 
-            // cBIns1
+            // cBIns4
             // 
-            this.cBIns1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBIns1.FormattingEnabled = true;
-            this.cBIns1.Location = new System.Drawing.Point(774, 22);
-            this.cBIns1.Name = "cBIns1";
-            this.cBIns1.Size = new System.Drawing.Size(156, 24);
-            this.cBIns1.TabIndex = 22;
+            this.cBIns4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBIns4.FormattingEnabled = true;
+            this.cBIns4.Location = new System.Drawing.Point(774, 22);
+            this.cBIns4.Name = "cBIns4";
+            this.cBIns4.Size = new System.Drawing.Size(156, 24);
+            this.cBIns4.TabIndex = 22;
             // 
             // nUDIns2
             // 
@@ -303,6 +310,7 @@
             // 
             // tPUpdate_Delete
             // 
+            this.tPUpdate_Delete.Controls.Add(this.chBUp1);
             this.tPUpdate_Delete.Controls.Add(this.dtPUp2);
             this.tPUpdate_Delete.Controls.Add(this.dtPUp1);
             this.tPUpdate_Delete.Controls.Add(this.lbUp1);
@@ -505,7 +513,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(412, 64);
+            this.button3.Location = new System.Drawing.Point(478, 64);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(230, 41);
             this.button3.TabIndex = 41;
@@ -519,7 +527,7 @@
             this.cBDop1.FormattingEnabled = true;
             this.cBDop1.Location = new System.Drawing.Point(6, 22);
             this.cBDop1.Name = "cBDop1";
-            this.cBDop1.Size = new System.Drawing.Size(195, 24);
+            this.cBDop1.Size = new System.Drawing.Size(230, 24);
             this.cBDop1.TabIndex = 38;
             // 
             // label1
@@ -533,9 +541,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(209, 64);
+            this.button2.Location = new System.Drawing.Point(242, 64);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(197, 41);
+            this.button2.Size = new System.Drawing.Size(230, 41);
             this.button2.TabIndex = 28;
             this.button2.Text = "Сформировать формуляр книги";
             this.button2.UseVisualStyleBackColor = true;
@@ -544,7 +552,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(6, 64);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(197, 41);
+            this.button1.Size = new System.Drawing.Size(230, 41);
             this.button1.TabIndex = 27;
             this.button1.Text = "Сформировать формуляр читателя";
             this.button1.UseVisualStyleBackColor = true;
@@ -573,6 +581,42 @@
             this.btnClose.Text = "Выход";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // cBIns1
+            // 
+            this.cBIns1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBIns1.FormattingEnabled = true;
+            this.cBIns1.Location = new System.Drawing.Point(6, 22);
+            this.cBIns1.Name = "cBIns1";
+            this.cBIns1.Size = new System.Drawing.Size(230, 24);
+            this.cBIns1.TabIndex = 27;
+            // 
+            // cBIns2
+            // 
+            this.cBIns2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBIns2.FormattingEnabled = true;
+            this.cBIns2.Location = new System.Drawing.Point(242, 22);
+            this.cBIns2.Name = "cBIns2";
+            this.cBIns2.Size = new System.Drawing.Size(226, 24);
+            this.cBIns2.TabIndex = 28;
+            // 
+            // cBIns3
+            // 
+            this.cBIns3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBIns3.FormattingEnabled = true;
+            this.cBIns3.Location = new System.Drawing.Point(474, 22);
+            this.cBIns3.Name = "cBIns3";
+            this.cBIns3.Size = new System.Drawing.Size(179, 24);
+            this.cBIns3.TabIndex = 29;
+            // 
+            // chBUp1
+            // 
+            this.chBUp1.AutoSize = true;
+            this.chBUp1.Location = new System.Drawing.Point(31, 27);
+            this.chBUp1.Name = "chBUp1";
+            this.chBUp1.Size = new System.Drawing.Size(18, 17);
+            this.chBUp1.TabIndex = 41;
+            this.chBUp1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -627,7 +671,7 @@
         private System.Windows.Forms.TextBox tBIns1;
         private System.Windows.Forms.Label lbIns2;
         private System.Windows.Forms.Label lbIns1;
-        private System.Windows.Forms.ComboBox cBIns1;
+        private System.Windows.Forms.ComboBox cBIns4;
         private System.Windows.Forms.DateTimePicker dtPIns2;
         private System.Windows.Forms.DateTimePicker dtPIns1;
         private System.Windows.Forms.DateTimePicker dtPUp2;
@@ -652,6 +696,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.ComboBox cBIns3;
+        private System.Windows.Forms.ComboBox cBIns2;
+        private System.Windows.Forms.ComboBox cBIns1;
+        private System.Windows.Forms.CheckBox chBUp1;
     }
 }
 

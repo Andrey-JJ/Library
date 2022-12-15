@@ -39,6 +39,8 @@ namespace Library
             catch { MessageBox.Show("Не удалось подключиться к базе данных.\n Неверно указаны данные."); }
             bdTableTree.ExpandAll();
         }
+        #endregion
+        #region Form functions
         /// <summary>
         /// Метод вывода списка всех отделов библиотеки
         /// </summary>
@@ -46,6 +48,9 @@ namespace Library
         void GetAllForComboBoxes(NpgsqlConnection connection)
         {
             cBIns1.Items.Clear();
+            cBIns2.Items.Clear();
+            cBIns3.Items.Clear();
+            cBIns4.Items.Clear();
             cBUp1.Items.Clear();
             cBDop1.Items.Clear();
             //Получение отделов
@@ -54,7 +59,7 @@ namespace Library
             {
                 for(int i = 0; i < dt.Rows.Count; i++)
                 {
-                    cBIns1.Items.Add(dt.Rows[i][0].ToString());
+                    cBIns4.Items.Add(dt.Rows[i][0].ToString());
                     cBUp1.Items.Add(dt.Rows[i][0].ToString());
                 }
             }
@@ -62,7 +67,24 @@ namespace Library
             dt = DataBaseProcessing.SelectAllSubscribers(connection);
             if (dt.Rows.Count > 0)
                 for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cBIns2.Items.Add(dt.Rows[i][0].ToString());
                     cBDop1.Items.Add(dt.Rows[i][0].ToString());
+                }
+            //Получение библиотекарей
+            dt = DataBaseProcessing.SelectAllLibrarians(connection);
+            if (dt.Rows.Count > 0)
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cBIns3.Items.Add(dt.Rows[i][0].ToString());
+                }
+            //Получение книг
+            dt = DataBaseProcessing.SelectAllBooks(connection);
+            if (dt.Rows.Count > 0)
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cBIns1.Items.Add(dt.Rows[i][0].ToString());
+                }
         }
         /// <summary>
         /// Метод заполнения древа
@@ -162,18 +184,21 @@ namespace Library
                 case "Экземпляр книги":
                     //visible
                     lbIns1.Text = "Название книги"; lbIns1.Visible = true;
-                    tBIns1.Visible = true;
-                    lbIns2.Text = "Издание"; lbIns2.Visible = true;
-                    tBIns2.Visible = true;
-                    lbIns3.Text = "Автор/Авторы"; lbIns3.Visible = true;
-                    tBIns3.Visible = true;
-                    lbIns4.Text = "Объем"; lbIns4.Visible = true;
-                    nUDIns1.Visible = true;
-                    lbIns5.Text = "Отдел"; lbIns5.Visible = true;
                     cBIns1.Visible = true;
                     lbIns6.Text = "Кол-во книг"; lbIns6.Visible = true;
                     nUDIns2.Visible = true;
                     //non visible
+                    lbIns2.Visible = false;
+                    lbIns3.Visible = false;
+                    lbIns4.Visible = false;
+                    lbIns5.Visible = false;
+                    tBIns1.Visible = false;
+                    tBIns2.Visible = false;
+                    tBIns3.Visible = false;
+                    cBIns2.Visible = false;
+                    cBIns3.Visible = false;
+                    cBIns4.Visible = false;
+                    nUDIns1.Visible = false;
                     dtPIns1.Visible = false;
                     dtPIns2.Visible = false;
                     btnInsImg.Visible = false;
@@ -189,29 +214,35 @@ namespace Library
                     lbIns4.Text = "Объем"; lbIns4.Visible = true;
                     nUDIns1.Visible = true;
                     lbIns5.Text = "Отдел"; lbIns5.Visible = true;
-                    cBIns1.Visible = true;
+                    cBIns4.Visible = true;
                     lbIns6.Text = "Кол-во книг"; lbIns6.Visible = true;
                     nUDIns2.Visible = true;
                     btnInsImg.Visible = true;
                     //non visible
+                    cBIns1.Visible = false;
+                    cBIns2.Visible = false;
+                    cBIns3.Visible = false;
                     dtPIns1.Visible = false;
                     dtPIns2.Visible = false;
                     break;
                 case "Выдача":
                     //visible
                     lbIns1.Text = "Название книги"; lbIns1.Visible = true;
-                    tBIns1.Visible = true;
+                    cBIns1.Visible = true;
                     lbIns2.Text = "Абонент"; lbIns2.Visible = true;
-                    tBIns2.Visible = true;
+                    cBIns2.Visible = true;
                     lbIns3.Text = "Библиотекарь"; lbIns3.Visible = true;
-                    tBIns3.Visible = true;
+                    cBIns3.Visible = true;
                     lbIns4.Text = "Дата выдачи"; lbIns4.Visible = true;
                     dtPIns1.Visible = true;
                     lbIns6.Text = "Дата возврата"; lbIns6.Visible = true;
                     dtPIns2.Visible = true;
                     //non visible
+                    tBIns1.Visible = false;
+                    tBIns2.Visible = false;
+                    tBIns3.Visible = false;
                     lbIns5.Visible = false;
-                    cBIns1.Visible = false;
+                    cBIns4.Visible = false;
                     nUDIns1.Visible = false;
                     nUDIns2.Visible = false;
                     btnInsImg.Visible = false;
@@ -221,6 +252,9 @@ namespace Library
                     lbIns1.Text = "Название отдела"; lbIns1.Visible = true;
                     tBIns1.Visible = true;
                     //non visible
+                    cBIns1.Visible = false;
+                    cBIns2.Visible = false;
+                    cBIns3.Visible = false;
                     lbIns2.Visible = false;
                     tBIns2.Visible = false;
                     lbIns3.Visible = false;
@@ -229,7 +263,6 @@ namespace Library
                     dtPIns1.Visible = false;
                     nUDIns1.Visible = false;
                     lbIns5.Visible = false;
-                    cBIns1.Visible = false;
                     nUDIns2.Visible = false;
                     dtPIns2.Visible = false;
                     lbIns6.Visible = false;
@@ -244,14 +277,16 @@ namespace Library
                     lbIns3.Text = "Отчество"; lbIns3.Visible = true;
                     tBIns3.Visible = true;
                     //non visible
+                    cBIns1.Visible = false;
+                    cBIns2.Visible = false;
+                    cBIns3.Visible = false;
                     lbIns4.Visible = false;
                     nUDIns1.Visible = false;
                     lbIns5.Visible = false;
-                    cBIns1.Visible = false;
                     dtPIns1.Visible = false;
                     lbIns6.Visible = false;
                     nUDIns2.Visible = false;
-                    cBIns1.Visible = false;
+                    cBIns4.Visible = false;
                     dtPIns2.Visible = false;
                     btnInsImg.Visible = false;
                     break;
@@ -264,14 +299,16 @@ namespace Library
                     lbIns3.Text = "Отчество"; lbIns3.Visible = true;
                     tBIns3.Visible = true;
                     //non visible
+                    cBIns1.Visible = false;
+                    cBIns2.Visible = false;
+                    cBIns3.Visible = false;
                     lbIns4.Visible = false;
                     nUDIns1.Visible = false;
                     lbIns5.Visible = false;
-                    cBIns1.Visible = false;
+                    cBIns4.Visible = false;
                     dtPIns1.Visible = false;
                     lbIns6.Visible = false;
                     nUDIns2.Visible = false;
-                    cBIns1.Visible = false;
                     dtPIns2.Visible = false;
                     btnInsImg.Visible = false;
                     break;
@@ -287,19 +324,20 @@ namespace Library
             {
                 case "Экземпляр книги":
                     //visible
-                    lbUp1.Text = "Название книги"; lbUp1.Visible = true;
-                    tBUp1.Visible = true;
-                    lbUp2.Text = "Издание"; lbUp2.Visible = true;
-                    tBUp2.Visible = true;
-                    lbUp3.Text = "Автор/Авторы"; lbUp3.Visible = true;
-                    tBUp3.Visible = true;
-                    lbUp4.Text = "Объем"; lbUp4.Visible = true;
-                    nUDUp1.Visible = true;
-                    lbUp5.Text = "Отдел"; lbUp5.Visible = true;
-                    cBUp1.Visible = true;
-                    lbUp6.Text = "Кол-во книг"; lbUp6.Visible = true;
-                    nUDUp2.Visible = true;
+                    lbUp1.Text = "Читатель книги"; lbUp1.Visible = true;
+                    chBUp1.Visible = true;
                     //non visible
+                    tBUp1.Visible = false;
+                    tBUp2.Visible = false;
+                    tBUp3.Visible = false;
+                    lbUp2.Visible = false;
+                    lbUp3.Visible = false;
+                    lbUp4.Visible = false;
+                    lbUp5.Visible = false;
+                    lbUp6.Visible = false;
+                    cBUp1.Visible = false;
+                    nUDUp1.Visible = false;
+                    nUDUp2.Visible = false;
                     dtPUp1.Visible = false;
                     dtPUp2.Visible = false;
                     break;
@@ -318,32 +356,33 @@ namespace Library
                     lbUp6.Text = "Кол-во книг"; lbUp6.Visible = true;
                     nUDUp2.Visible = true;
                     //non visible
+                    chBUp1.Visible = false;
                     dtPUp1.Visible = false;
                     dtPUp2.Visible = false;
                     break;
                 case "Выдача":
-                    //visible
-                    lbUp1.Text = "Название книги"; lbUp1.Visible = true;
-                    tBUp1.Visible = true;
-                    lbUp2.Text = "Абонент"; lbUp2.Visible = true;
-                    tBUp2.Visible = true;
-                    lbUp3.Text = "Библиотекарь"; lbUp3.Visible = true;
-                    tBUp3.Visible = true;
-                    lbUp4.Text = "Дата выдачи"; lbUp4.Visible = true;
-                    dtPUp1.Visible = true;
-                    lbUp6.Text = "Дата возврата"; lbUp6.Visible = true;
-                    dtPUp2.Visible = true;
                     //non visible
+                    lbUp1.Visible = false;
+                    tBUp1.Visible = false;
+                    chBUp1.Visible = false;
+                    lbUp2.Visible = false;
+                    tBUp2.Visible = false;
+                    lbUp3.Visible = false;
+                    tBUp3.Visible = false;
+                    lbUp4.Visible = false;
                     lbUp5.Visible = false;
                     cBUp1.Visible = false;
                     nUDUp1.Visible = false;
                     nUDUp2.Visible = false;
+                    dtPUp1.Visible = false;
+                    dtPUp2.Visible = false;
                     break;
                 case "Отдел":
                     //visible
                     lbUp1.Text = "Название отдела"; lbUp1.Visible = true;
                     tBUp1.Visible = true;
                     //non visible
+                    chBUp1.Visible = false;
                     lbUp2.Visible = false;
                     tBUp2.Visible = false;
                     lbUp3.Visible = false;
@@ -366,6 +405,7 @@ namespace Library
                     lbUp3.Text = "Отчество"; lbUp3.Visible = true;
                     tBUp3.Visible = true;
                     //non visible
+                    chBUp1.Visible = false;
                     lbUp4.Visible = false;
                     nUDUp1.Visible = false;
                     lbUp5.Visible = false;
@@ -385,6 +425,7 @@ namespace Library
                     lbUp3.Text = "Отчество"; lbUp3.Visible = true;
                     tBUp3.Visible = true;
                     //non visible
+                    chBUp1.Visible = false;
                     lbUp4.Visible = false;
                     nUDUp1.Visible = false;
                     lbUp5.Visible = false;
@@ -410,13 +451,6 @@ namespace Library
                     tBUp3.Text = DataBaseDGV.CurrentRow.Cells[2].Value.ToString();
                     nUDUp1.Value = Int32.Parse(DataBaseDGV.CurrentRow.Cells[3].Value.ToString());
                     cBUp1.SelectedIndex = DataBaseProcessing.GetDepId(DataBaseDGV.CurrentRow.Cells[4].Value.ToString(), dataBase.Connection);
-                    break;
-                case "Выдача":
-                    tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
-                    tBUp2.Text = DataBaseDGV.CurrentRow.Cells[1].Value.ToString();
-                    tBUp3.Text = DataBaseDGV.CurrentRow.Cells[2].Value.ToString();
-                    dtPUp1.Value = (DateTime)DataBaseDGV.CurrentRow.Cells[3].Value;
-                    dtPUp2.Value = (DateTime)DataBaseDGV.CurrentRow.Cells[4].Value;
                     break;
                 case "Отдел":
                     tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
@@ -517,8 +551,8 @@ namespace Library
             string[] data = new string[4];
             data[0] = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
             data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
-            data[2] = $"{cBIns1.SelectedIndex}";
-            data[3] = $"{dtPIns1.Value.Date};{dtPIns1.Value.Date}";
+            data[2] = $"{cBIns1.SelectedIndex};{cBIns2.SelectedIndex};{cBIns3.SelectedIndex};{cBIns4.SelectedIndex}";
+            data[3] = $"{dtPIns1.Value.Date};{dtPIns2.Value.Date}";
             DataBaseProcessing.Insert(dataBase.Table, data, dataBase.Connection);
             SelectFromDB(dataBase.Table);
         }
