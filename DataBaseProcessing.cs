@@ -242,7 +242,7 @@ namespace Library
             string[] numerics = data[1].Split(';');
             string[] comboboxes = data[2].Split(';');
             string[] datepickers = data[3].Split(';');
-            string book = textboxes[0] + ";" + numerics[1];
+            string book = comboboxes[0] + ";" + numerics[1];
             if (table == "Экземпляр книги") Insert_book(book, connection);
             else if (table == "Выдача")
             {
@@ -308,8 +308,7 @@ namespace Library
                 rowsCount = Int32.Parse(data[1]);
                 try
                 {
-                    DataTable cardTable = GetCardId(data[0], connection);
-                    int cardId = Int32.Parse(cardTable.Rows[0][0].ToString());
+                    int cardId = Int32.Parse(data[0]);
                     commandText = $"insert into book (card_id, book_sub) values ('{cardId}','{false}')";
                     for (int i = 0; i < rowsCount; i++)
                     {
@@ -379,25 +378,6 @@ namespace Library
         }
         #endregion
         #region Additional functions
-        /// <summary>
-        /// Метод получения id каталожной карточки по названию
-        /// </summary>
-        /// <param name="name"> Переменная хранящая название книги </param>
-        /// <param name="connection"> Переменная подключения к базе данных </param>
-        /// <returns> Возвращает полученное id в ходе выполнения запроса </returns>
-        static DataTable GetCardId(string name, NpgsqlConnection connection)
-        {
-            DataTable dt = new DataTable();
-            string commandText = $"select id from card where book_name = '{name}'";
-            try
-            {
-                NpgsqlCommand getCardId = new NpgsqlCommand(commandText, connection);
-                NpgsqlDataReader reader = getCardId.ExecuteReader();
-                dt.Load(reader);
-            }
-            catch { }
-            return dt;
-        }
         /// <summary>
         /// Функция для получения id выбранного отдела
         /// </summary>
