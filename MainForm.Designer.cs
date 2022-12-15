@@ -33,6 +33,9 @@
             this.bdTableTree = new System.Windows.Forms.TreeView();
             this.tCActions = new System.Windows.Forms.TabControl();
             this.tPInsert = new System.Windows.Forms.TabPage();
+            this.cBIns3 = new System.Windows.Forms.ComboBox();
+            this.cBIns2 = new System.Windows.Forms.ComboBox();
+            this.cBIns1 = new System.Windows.Forms.ComboBox();
             this.btnInsert = new System.Windows.Forms.Button();
             this.dtPIns2 = new System.Windows.Forms.DateTimePicker();
             this.dtPIns1 = new System.Windows.Forms.DateTimePicker();
@@ -50,6 +53,7 @@
             this.lbIns2 = new System.Windows.Forms.Label();
             this.btnInsImg = new System.Windows.Forms.Button();
             this.tPUpdate_Delete = new System.Windows.Forms.TabPage();
+            this.chBUp1 = new System.Windows.Forms.CheckBox();
             this.dtPUp2 = new System.Windows.Forms.DateTimePicker();
             this.dtPUp1 = new System.Windows.Forms.DateTimePicker();
             this.lbUp1 = new System.Windows.Forms.Label();
@@ -67,19 +71,15 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.tPAdditional = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnLogs = new System.Windows.Forms.Button();
             this.cBDop1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnBookInfo = new System.Windows.Forms.Button();
+            this.btnSubInfo = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.npgsqlDataAdapter1 = new Npgsql.NpgsqlDataAdapter();
             this.btnClose = new System.Windows.Forms.Button();
-            this.cBIns1 = new System.Windows.Forms.ComboBox();
-            this.cBIns2 = new System.Windows.Forms.ComboBox();
-            this.cBIns3 = new System.Windows.Forms.ComboBox();
-            this.chBUp1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataBaseDGV)).BeginInit();
             this.tCActions.SuspendLayout();
             this.tPInsert.SuspendLayout();
@@ -119,7 +119,7 @@
             this.tCActions.Location = new System.Drawing.Point(12, 398);
             this.tCActions.Name = "tCActions";
             this.tCActions.SelectedIndex = 0;
-            this.tCActions.Size = new System.Drawing.Size(945, 166);
+            this.tCActions.Size = new System.Drawing.Size(1080, 166);
             this.tCActions.TabIndex = 3;
             // 
             // tPInsert
@@ -146,14 +146,41 @@
             this.tPInsert.Location = new System.Drawing.Point(4, 25);
             this.tPInsert.Name = "tPInsert";
             this.tPInsert.Padding = new System.Windows.Forms.Padding(3);
-            this.tPInsert.Size = new System.Drawing.Size(937, 137);
+            this.tPInsert.Size = new System.Drawing.Size(1072, 137);
             this.tPInsert.TabIndex = 0;
             this.tPInsert.Text = "Добавление";
             this.tPInsert.UseVisualStyleBackColor = true;
             // 
+            // cBIns3
+            // 
+            this.cBIns3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBIns3.FormattingEnabled = true;
+            this.cBIns3.Location = new System.Drawing.Point(474, 22);
+            this.cBIns3.Name = "cBIns3";
+            this.cBIns3.Size = new System.Drawing.Size(179, 24);
+            this.cBIns3.TabIndex = 29;
+            // 
+            // cBIns2
+            // 
+            this.cBIns2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBIns2.FormattingEnabled = true;
+            this.cBIns2.Location = new System.Drawing.Point(242, 22);
+            this.cBIns2.Name = "cBIns2";
+            this.cBIns2.Size = new System.Drawing.Size(226, 24);
+            this.cBIns2.TabIndex = 28;
+            // 
+            // cBIns1
+            // 
+            this.cBIns1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBIns1.FormattingEnabled = true;
+            this.cBIns1.Location = new System.Drawing.Point(6, 22);
+            this.cBIns1.Name = "cBIns1";
+            this.cBIns1.Size = new System.Drawing.Size(230, 24);
+            this.cBIns1.TabIndex = 27;
+            // 
             // btnInsert
             // 
-            this.btnInsert.Location = new System.Drawing.Point(558, 90);
+            this.btnInsert.Location = new System.Drawing.Point(893, 90);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(173, 41);
             this.btnInsert.TabIndex = 26;
@@ -171,7 +198,7 @@
             // 
             // dtPIns1
             // 
-            this.dtPIns1.Location = new System.Drawing.Point(659, 23);
+            this.dtPIns1.Location = new System.Drawing.Point(659, 22);
             this.dtPIns1.Name = "dtPIns1";
             this.dtPIns1.Size = new System.Drawing.Size(200, 22);
             this.dtPIns1.TabIndex = 24;
@@ -193,7 +220,7 @@
             // 
             this.cBIns4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBIns4.FormattingEnabled = true;
-            this.cBIns4.Location = new System.Drawing.Point(774, 22);
+            this.cBIns4.Location = new System.Drawing.Point(825, 21);
             this.cBIns4.Name = "cBIns4";
             this.cBIns4.Size = new System.Drawing.Size(156, 24);
             this.cBIns4.TabIndex = 22;
@@ -226,13 +253,13 @@
             0,
             0});
             this.nUDIns1.Name = "nUDIns1";
-            this.nUDIns1.Size = new System.Drawing.Size(109, 22);
+            this.nUDIns1.Size = new System.Drawing.Size(160, 22);
             this.nUDIns1.TabIndex = 19;
             // 
             // lbIns5
             // 
             this.lbIns5.AutoSize = true;
-            this.lbIns5.Location = new System.Drawing.Point(771, 3);
+            this.lbIns5.Location = new System.Drawing.Point(822, 3);
             this.lbIns5.Name = "lbIns5";
             this.lbIns5.Size = new System.Drawing.Size(48, 16);
             this.lbIns5.TabIndex = 18;
@@ -300,7 +327,7 @@
             // 
             // btnInsImg
             // 
-            this.btnInsImg.Location = new System.Drawing.Point(737, 90);
+            this.btnInsImg.Location = new System.Drawing.Point(693, 90);
             this.btnInsImg.Name = "btnInsImg";
             this.btnInsImg.Size = new System.Drawing.Size(194, 41);
             this.btnInsImg.TabIndex = 11;
@@ -330,10 +357,19 @@
             this.tPUpdate_Delete.Location = new System.Drawing.Point(4, 25);
             this.tPUpdate_Delete.Name = "tPUpdate_Delete";
             this.tPUpdate_Delete.Padding = new System.Windows.Forms.Padding(3);
-            this.tPUpdate_Delete.Size = new System.Drawing.Size(937, 137);
+            this.tPUpdate_Delete.Size = new System.Drawing.Size(1072, 137);
             this.tPUpdate_Delete.TabIndex = 1;
             this.tPUpdate_Delete.Text = "Изменение";
             this.tPUpdate_Delete.UseVisualStyleBackColor = true;
+            // 
+            // chBUp1
+            // 
+            this.chBUp1.AutoSize = true;
+            this.chBUp1.Location = new System.Drawing.Point(31, 27);
+            this.chBUp1.Name = "chBUp1";
+            this.chBUp1.Size = new System.Drawing.Size(18, 17);
+            this.chBUp1.TabIndex = 41;
+            this.chBUp1.UseVisualStyleBackColor = true;
             // 
             // dtPUp2
             // 
@@ -367,7 +403,7 @@
             // 
             this.cBUp1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBUp1.FormattingEnabled = true;
-            this.cBUp1.Location = new System.Drawing.Point(776, 23);
+            this.cBUp1.Location = new System.Drawing.Point(830, 23);
             this.cBUp1.Name = "cBUp1";
             this.cBUp1.Size = new System.Drawing.Size(156, 24);
             this.cBUp1.TabIndex = 37;
@@ -405,13 +441,13 @@
             0,
             0});
             this.nUDUp1.Name = "nUDUp1";
-            this.nUDUp1.Size = new System.Drawing.Size(110, 22);
+            this.nUDUp1.Size = new System.Drawing.Size(164, 22);
             this.nUDUp1.TabIndex = 34;
             // 
             // lbUp5
             // 
             this.lbUp5.AutoSize = true;
-            this.lbUp5.Location = new System.Drawing.Point(773, 4);
+            this.lbUp5.Location = new System.Drawing.Point(827, 4);
             this.lbUp5.Name = "lbUp5";
             this.lbUp5.Size = new System.Drawing.Size(48, 16);
             this.lbUp5.TabIndex = 33;
@@ -479,7 +515,7 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(579, 90);
+            this.btnUpdate.Location = new System.Drawing.Point(714, 90);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(173, 41);
             this.btnUpdate.TabIndex = 13;
@@ -489,7 +525,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(758, 90);
+            this.btnDelete.Location = new System.Drawing.Point(893, 90);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(173, 41);
             this.btnDelete.TabIndex = 12;
@@ -499,27 +535,27 @@
             // 
             // tPAdditional
             // 
-            this.tPAdditional.Controls.Add(this.button3);
+            this.tPAdditional.Controls.Add(this.btnLogs);
             this.tPAdditional.Controls.Add(this.cBDop1);
             this.tPAdditional.Controls.Add(this.label1);
-            this.tPAdditional.Controls.Add(this.button2);
-            this.tPAdditional.Controls.Add(this.button1);
+            this.tPAdditional.Controls.Add(this.btnBookInfo);
+            this.tPAdditional.Controls.Add(this.btnSubInfo);
             this.tPAdditional.Location = new System.Drawing.Point(4, 25);
             this.tPAdditional.Name = "tPAdditional";
-            this.tPAdditional.Size = new System.Drawing.Size(937, 137);
+            this.tPAdditional.Size = new System.Drawing.Size(1072, 137);
             this.tPAdditional.TabIndex = 2;
             this.tPAdditional.Text = "Дополнительно";
             this.tPAdditional.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnLogs
             // 
-            this.button3.Location = new System.Drawing.Point(478, 64);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(230, 41);
-            this.button3.TabIndex = 41;
-            this.button3.Text = "Просмотреть журнал логов";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnLogs.Location = new System.Drawing.Point(478, 64);
+            this.btnLogs.Name = "btnLogs";
+            this.btnLogs.Size = new System.Drawing.Size(230, 41);
+            this.btnLogs.TabIndex = 41;
+            this.btnLogs.Text = "Просмотреть журнал логов";
+            this.btnLogs.UseVisualStyleBackColor = true;
+            this.btnLogs.Click += new System.EventHandler(this.btnLogs_Click);
             // 
             // cBDop1
             // 
@@ -539,29 +575,30 @@
             this.label1.TabIndex = 30;
             this.label1.Text = "Выберите читателя";
             // 
-            // button2
+            // btnBookInfo
             // 
-            this.button2.Location = new System.Drawing.Point(242, 64);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(230, 41);
-            this.button2.TabIndex = 28;
-            this.button2.Text = "Сформировать формуляр книги";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnBookInfo.Location = new System.Drawing.Point(242, 64);
+            this.btnBookInfo.Name = "btnBookInfo";
+            this.btnBookInfo.Size = new System.Drawing.Size(230, 41);
+            this.btnBookInfo.TabIndex = 28;
+            this.btnBookInfo.Text = "Сформировать формуляр книги";
+            this.btnBookInfo.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnSubInfo
             // 
-            this.button1.Location = new System.Drawing.Point(6, 64);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(230, 41);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "Сформировать формуляр читателя";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSubInfo.Location = new System.Drawing.Point(6, 64);
+            this.btnSubInfo.Name = "btnSubInfo";
+            this.btnSubInfo.Size = new System.Drawing.Size(230, 41);
+            this.btnSubInfo.TabIndex = 27;
+            this.btnSubInfo.Text = "Сформировать формуляр читателя";
+            this.btnSubInfo.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(963, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(270, 379);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
@@ -581,42 +618,6 @@
             this.btnClose.Text = "Выход";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // cBIns1
-            // 
-            this.cBIns1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBIns1.FormattingEnabled = true;
-            this.cBIns1.Location = new System.Drawing.Point(6, 22);
-            this.cBIns1.Name = "cBIns1";
-            this.cBIns1.Size = new System.Drawing.Size(230, 24);
-            this.cBIns1.TabIndex = 27;
-            // 
-            // cBIns2
-            // 
-            this.cBIns2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBIns2.FormattingEnabled = true;
-            this.cBIns2.Location = new System.Drawing.Point(242, 22);
-            this.cBIns2.Name = "cBIns2";
-            this.cBIns2.Size = new System.Drawing.Size(226, 24);
-            this.cBIns2.TabIndex = 28;
-            // 
-            // cBIns3
-            // 
-            this.cBIns3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBIns3.FormattingEnabled = true;
-            this.cBIns3.Location = new System.Drawing.Point(474, 22);
-            this.cBIns3.Name = "cBIns3";
-            this.cBIns3.Size = new System.Drawing.Size(179, 24);
-            this.cBIns3.TabIndex = 29;
-            // 
-            // chBUp1
-            // 
-            this.chBUp1.AutoSize = true;
-            this.chBUp1.Location = new System.Drawing.Point(31, 27);
-            this.chBUp1.Name = "chBUp1";
-            this.chBUp1.Size = new System.Drawing.Size(18, 17);
-            this.chBUp1.TabIndex = 41;
-            this.chBUp1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -690,11 +691,11 @@
         private System.Windows.Forms.Label lbUp2;
         private Npgsql.NpgsqlDataAdapter npgsqlDataAdapter1;
         private System.Windows.Forms.Button btnInsert;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnBookInfo;
+        private System.Windows.Forms.Button btnSubInfo;
         private System.Windows.Forms.ComboBox cBDop1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnLogs;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ComboBox cBIns3;
         private System.Windows.Forms.ComboBox cBIns2;

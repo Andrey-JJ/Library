@@ -43,8 +43,10 @@ namespace Library
                         "where department.id = card.dep_id order by card.id";
                     break;
                 case "Выдача":
-                    temp = "select book_name as \"Название\", (sub_lastname || ' ' || sub_name || ' ' || sub_midname) as \"Абонент\", (lib_lastname || ' ' || lib_name || ' ' || lib_midname) as \"Библиотекарь\", is_date as \"Дата выдачи\", is_rdate as \"Дата возврата\" FROM book_issue, subscriber, librarian, card " +
-                        "where subscriber.id = book_issue.sub_id and librarian.id = book_issue.lib_id and book_issue.book_id = (SELECT book.id from book where book.card_id = card.id order by book.id asc limit 1) " +
+                    temp = "select book_issue.book_id as \"Номер книги\", card.book_name as \"Название книги\", (sub_lastname || ' ' || sub_name || ' ' || sub_midname) as \"Абонент\", (lib_lastname || ' ' || lib_name || ' ' || lib_midname) as \"Библиотекарь\", is_date as \"Дата выдачи\", is_rdate as \"Дата возврата\" FROM book_issue " +
+                        "inner join subscriber on book_issue.sub_id = subscriber.id " +
+                        "inner join librarian on book_issue.lib_id = librarian.id " +
+                        "inner join book on book_issue.book_id = book.id inner join card on card.id = book.card_id WHERE book.id = book_issue.book_id " +
                         "order by book_issue.id";
                     break;
                 case "Отдел":
@@ -379,7 +381,7 @@ namespace Library
         #endregion
         #region Additional functions
         /// <summary>
-        /// Функция для получения id выбранного отдела
+        /// Метод для получения id выбранного отдела
         /// </summary>
         /// <param name="name"> Переменная хранящая название отдела </param>
         /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
@@ -400,16 +402,16 @@ namespace Library
             return depId;
         }
         /// <summary>
-        /// 
+        /// Метод для получения id книги выбранной каталожной карточки
         /// </summary>
-        /// <param name="cardId"></param>
-        /// <param name="connection"></param>
-        /// <returns></returns>
+        /// <param name="cardId"> Переменная хранящая id каталожной карточки </param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращает полученное id в ходе выполнения запроса </returns>
         static int GetBookId(int cardId, NpgsqlConnection connection)
         {
             int depId = 0;
             DataTable dt = new DataTable();
-            string commandText = $"select id from book where book.card_id = '{cardId}' and book.book_sub = 'false' limit 1";
+            string commandText = $"select id from book where card_id = '{cardId}' and book_sub = 'false' limit 1";
             try
             {
                 NpgsqlCommand getDepId = new NpgsqlCommand(commandText, connection);

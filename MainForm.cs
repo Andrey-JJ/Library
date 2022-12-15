@@ -480,7 +480,7 @@ namespace Library
             if(dataBase.Table == "Каталожная карточка книги")
             {
                 int id = e.RowIndex;
-                SelectImg(id);
+                GetImage(id);
             }
             GetInfoForUpdate();
         }
@@ -509,11 +509,11 @@ namespace Library
         /// Метод вывода изображения в picturebox
         /// </summary>
         /// <param name="id"> Переменная хранящая id выбранной строки</param>
-        void SelectImg(int id)
+        void GetImage(int id)
         {
             DataTable dt = DataBaseProcessing.SelectImage(id, dataBase.Connection);
             Image img = null;
-            if (dt != null)
+            if(!Convert.IsDBNull(dt.Rows[0][0]))
             {
                 byte[] imageArray = (byte[])dt.Rows[0][0];
                 var ms = new MemoryStream(imageArray);
@@ -615,7 +615,7 @@ namespace Library
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button3_Click(object sender, EventArgs e)
+        private void btnLogs_Click(object sender, EventArgs e)
         {
             LogsForm form = new LogsForm(dataBase.Connection);
             form.Show();
