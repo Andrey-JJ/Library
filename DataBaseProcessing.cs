@@ -280,6 +280,12 @@ namespace Library
                 catch { MessageBox.Show($"Не удалось добавить данные в таблицу {table}.\n Введены не корректные данные."); }
             }
         }
+        /// <summary>
+        /// Метод ввода данных в таблицу выдача
+        /// </summary>
+        /// <param name="dates"> Массив дат для заполнения соответствующих полей таблицы </param>
+        /// <param name="commandText"> Переменная хранящая комманду для ввода новых данных в таблицу </param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
         static void Insert_issue(string[] dates, string commandText, NpgsqlConnection connection)
         {
             try
@@ -421,6 +427,54 @@ namespace Library
             catch { }
             depId = (int)dt.Rows[0][0];
             return depId;
+        }
+        /// <summary>
+        /// Метод формирубщий формуляр выбранной книги
+        /// </summary>
+        /// <param name="bookId"> Переменная хранящая id выбранной книги </param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращаемое значение это таблица, полученная в результате работы запроса </returns>
+        public static DataTable BookFormTable(int bookId, NpgsqlConnection connection)
+        {
+            DataTable dt = new DataTable();
+            string commandText = $"select book_issue.book_id, card.book_name, (lib_lastname || ' ' || lib_name || ' ' || lib_midname), is_date, is_rdate FROM book_issue " +
+                $"left join librarian on book_issue.lib_id = librarian.id " +
+                $"left join book on book_issue.book_id = book.id " +
+                $"left join card on card.id = book.card_id WHERE book.id = book_issue.book_id " +
+                $"and book_issue.sub_id = {bookId} " +
+                $"order by book_issue.id";
+            try
+            {
+                NpgsqlCommand getDepId = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = getDepId.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch { }
+            return dt;
+        }
+        /// <summary>
+        /// Метод формурующий формуляр выбранного читателя
+        /// </summary>
+        /// <param name="subId"> Переменная хранящая id выбранного читателя </param>
+        /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
+        /// <returns> Возвращаемое значение это таблица, полученная в результате работы запроса </returns>
+        public static DataTable SubFormTable(int subId, NpgsqlConnection connection)
+        {
+            DataTable dt = new DataTable();
+            string commandText = $"select book_issue.book_id, card.book_name, (lib_lastname || ' ' || lib_name || ' ' || lib_midname), is_date, is_rdate FROM book_issue " +
+                $"left join librarian on book_issue.lib_id = librarian.id " +
+                $"left join book on book_issue.book_id = book.id " +
+                $"left join card on card.id = book.card_id WHERE book.id = book_issue.book_id " +
+                $"and book_issue.sub_id = {subId} " +
+                $"order by book_issue.id";
+            try
+            {
+                NpgsqlCommand getDepId = new NpgsqlCommand(commandText, connection);
+                NpgsqlDataReader reader = getDepId.ExecuteReader();
+                dt.Load(reader);
+            }
+            catch {  }
+            return dt;
         }
         #endregion
     }
