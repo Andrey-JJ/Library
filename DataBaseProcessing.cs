@@ -437,11 +437,10 @@ namespace Library
         public static DataTable BookFormTable(int bookId, NpgsqlConnection connection)
         {
             DataTable dt = new DataTable();
-            string commandText = $"select book_issue.book_id, card.book_name, (lib_lastname || ' ' || lib_name || ' ' || lib_midname), is_date, is_rdate FROM book_issue " +
+            string commandText = $"select (sub_lastname || ' ' || sub_name || ' ' || sub_midname), (lib_lastname || ' ' || lib_name || ' ' || lib_midname), is_date, is_rdate FROM book_issue " +
                 $"left join librarian on book_issue.lib_id = librarian.id " +
-                $"left join book on book_issue.book_id = book.id " +
-                $"left join card on card.id = book.card_id WHERE book.id = book_issue.book_id " +
-                $"and book_issue.sub_id = {bookId} " +
+                $"left join subscriber on book_issue.sub_id = subscriber.id " +
+                $"where book_issue.book_id = {bookId} " +
                 $"order by book_issue.id";
             try
             {

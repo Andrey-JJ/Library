@@ -592,6 +592,7 @@
             this.btnSubInfo.TabIndex = 27;
             this.btnSubInfo.Text = "Сформировать формуляр читателя";
             this.btnSubInfo.UseVisualStyleBackColor = true;
+            this.btnSubInfo.Click += new System.EventHandler(this.btnSubInfo_Click);
             // 
             // pictureBox1
             // 

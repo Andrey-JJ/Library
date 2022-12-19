@@ -626,6 +626,13 @@ namespace Library
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnClose_Click(object sender, EventArgs e) => Application.Exit();
+
+        private void btnSubInfo_Click(object sender, EventArgs e)
+        {
+            int id = cBDop1.SelectedIndex;
+            DataTable dt = DataBaseProcessing.SubFormTable(id, dataBase.Connection);
+            PDF_FormGenerator.ExportToPDF(dt, "abonentForm_" + DateTime.Now);
+        }
         #endregion
     }
 }
