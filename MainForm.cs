@@ -593,16 +593,9 @@ namespace Library
         byte[] LoadPhotoToArray()
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.InitialDirectory = @"C:\";
-            openFileDialog1.Filter = "All Embroidery Files | *.bmp; *.gif; *.jpeg; *.jpg; " +
-             "*.fif;*.fiff;*.png;*.wmf;*.emf" +
-             "|Windows Bitmap (*.bmp)|*.bmp" +
-             "|JPEG File Interchange Format (*.jpg)|*.jpg;*.jpeg" +
-             "|Graphics Interchange Format (*.gif)|*.gif" +
-             "|Portable Network Graphics (*.png)|*.png" +
-             "|Tag Embroidery File Format (*.tif)|*.tif;*.tiff";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                MessageBox.Show($"В базу будет добавлен следующий файл - {openFileDialog1.FileName}");
                 Image image = Image.FromFile(openFileDialog1.FileName);
                 MemoryStream memoryStream = new MemoryStream();
                 image.Save(memoryStream, ImageFormat.Jpeg);
@@ -631,7 +624,19 @@ namespace Library
         {
             int id = cBDop1.SelectedIndex;
             DataTable dt = DataBaseProcessing.SubFormTable(id, dataBase.Connection);
-            PDF_FormGenerator.ExportToPDF(dt, "abonentForm_" + DateTime.Now);
+            string s = cBDop1.SelectedItem.ToString();
+            Form f = new SubForm(dt, s);
+            f.Show();
+            //PDF_FormGenerator.ExportToPDF(dt, "abonentForm_" + DateTime.Now);
+        }
+
+        private void btnBookInfo_Click(object sender, EventArgs e)
+        {
+            int id = DataBaseDGV.CurrentRow.Index;
+            DataTable dt = DataBaseProcessing.BookFormTable(id, dataBase.Connection);
+            Form f = new BookForm(dt);
+            f.Show();
+            //PDF_FormGenerator.ExportToPDF(dt, "abonentForm_" + DateTime.Now);
         }
         #endregion
     }
