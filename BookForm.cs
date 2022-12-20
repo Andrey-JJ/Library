@@ -10,8 +10,16 @@ using System.Windows.Forms;
 
 namespace Library
 {
+    /// <summary>
+    /// Форма формуляр книги
+    /// </summary>
     public partial class BookForm : Form
     {
+        /// <summary>
+        /// Конструктор класса создающий форму и сохраняющий файл
+        /// </summary>
+        /// <param name="dt"> Таблица хранящая данные из базы данных </param>
+        /// <param name="data"> Массив хранящий название и номер выбранной книги </param>
         public BookForm(DataTable dt, string[] data)
         {
             InitializeComponent();
@@ -20,6 +28,11 @@ namespace Library
             string filename = PDF_FormGenerator.GetFileName("ФормулярКниги_"+DateTime.Now);
             PDF_FormGenerator.ExportBookFormToPDF(dt, filename, data);
         }
+        /// <summary>
+        /// Обработчик кнопки закрытия формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();

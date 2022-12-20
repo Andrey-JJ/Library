@@ -102,7 +102,6 @@ namespace Library
             bdTableTree.Nodes.Add(node);
         }
         #endregion
-        //UI Закончено?
         #region UI/Fields
         //Подчеркивание Label при наведении
         private void OnMouseEnter(object sender, EventArgs e) 
@@ -468,7 +467,6 @@ namespace Library
             }
         }
         #endregion
-        //Добавить изображения
         #region Image
         /// <summary>
         /// Функция вывода изображения и заполнения полей при выборе записи из таблицы
@@ -619,7 +617,11 @@ namespace Library
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnClose_Click(object sender, EventArgs e) => Application.Exit();
-
+        /// <summary>
+        /// Обработчик кнопки для создания формуляра читателя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSubInfo_Click(object sender, EventArgs e)
         {
             int id = cBDop1.SelectedIndex;
@@ -629,7 +631,11 @@ namespace Library
             f.Show();
             
         }
-
+        /// <summary>
+        /// Обработчик кнопки для создания формуляра книги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBookInfo_Click(object sender, EventArgs e)
         {
             int id = DataBaseDGV.CurrentRow.Index;

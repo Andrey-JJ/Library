@@ -17,9 +17,17 @@ using iText.Layout.Properties;
 
 namespace Library
 {
+    /// <summary>
+    /// Класс для создания pdf формуляров читателя и книги
+    /// </summary>
     public class PDF_FormGenerator
     {
-
+        /// <summary>
+        /// Метод создания формуляра читателя
+        /// </summary>
+        /// <param name="dt"> Таблица хранящая данные из базы </param>
+        /// <param name="filename"> Переменная хранящая название файла </param>
+        /// <param name="subname"> Переменная хранящая выбранного читателя </param>
         public static void ExportSubFormToPDF(DataTable dt, string filename, string subname)
         {
             try
@@ -51,7 +59,12 @@ namespace Library
             }
             catch { }
         }
-
+        /// <summary>
+        /// Метод создания формуляра книги
+        /// </summary>
+        /// <param name="dt"> Таблица хранящая данные из базы </param>
+        /// <param name="filename"> Переменная хранящая название файла </param>
+        /// <param name="data"> Массив хранящий название и номер книги </param>
         public static void ExportBookFormToPDF(DataTable dt, string filename, string[] data)
         {
             try
@@ -85,7 +98,11 @@ namespace Library
             }
             catch { }
         }
-
+        /// <summary>
+        /// Метод создания документа по выбранному пути
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private static Document CreateDocument(string path)
         {
             Document document = new Document(new PdfDocument(new PdfWriter(path)));
@@ -93,7 +110,11 @@ namespace Library
             document.SetFont(font);
             return document;
         }
-
+        /// <summary>
+        /// Метод выбора пути сохранения файла
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public static string GetFileName(string filename)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
