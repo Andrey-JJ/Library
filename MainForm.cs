@@ -627,16 +627,16 @@ namespace Library
             string s = cBDop1.SelectedItem.ToString();
             Form f = new SubForm(dt, s);
             f.Show();
-            //PDF_FormGenerator.ExportToPDF(dt, "abonentForm_" + DateTime.Now);
+            
         }
 
         private void btnBookInfo_Click(object sender, EventArgs e)
         {
             int id = DataBaseDGV.CurrentRow.Index;
             DataTable dt = DataBaseProcessing.BookFormTable(id, dataBase.Connection);
-            Form f = new BookForm(dt);
+            string[] data = new string[] { $"{id}", $"{DataBaseDGV.CurrentCell.Value}" };
+            Form f = new BookForm(dt, data);
             f.Show();
-            //PDF_FormGenerator.ExportToPDF(dt, "abonentForm_" + DateTime.Now);
         }
         #endregion
     }

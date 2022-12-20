@@ -5,39 +5,106 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using iTextSharp;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+using System.Windows.Forms;
+using iText.IO.Font;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Font;
+using iText.Layout.Properties;
 
 namespace Library
 {
     public class PDF_FormGenerator
     {
-        public static void ExportToPDF(DataTable dt, string filename)
+
+        public static void ExportSubFormToPDF(DataTable dt, string filename, string subname)
         {
-            Document document = new Document();
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream($@"C:\Users\Jake\Desktop\{filename}", FileMode.Create));
-            document.Open();
-            Font font = FontFactory.GetFont(FontFactory.TIMES_BOLDITALIC, 11);
-            PdfPTable table = new PdfPTable(dt.Columns.Count);
-            PdfPRow row = null;
-            float[] widths = new float[] { 4f, 4f, 4f, 4f };
-            table.SetWidths(widths);
-            table.WidthPercentage = 100;
-            
-            string colname = "";
-            PdfPCell cell = new PdfPCell(new Phrase("PRODUCTS"));
-            cell.Colspan = dt.Columns.Count;
-            foreach (DataColumn c in dt.Columns)
-                table.AddCell(new Phrase(c.ColumnName, font));
-            int i = 0;
-            foreach (DataRow r in dt.Rows)
+            try
             {
-                table.AddCell(new Phrase(r[i].ToString(), font));
-                i++;
+                Document document = CreateDocument(filename);
+                Paragraph header = new Paragraph($"Формуляр читателя - {subname}")
+                   .SetTextAlignment(TextAlignment.CENTER)
+                   .SetFontSize(18);
+                document.Add(header);
+
+                Paragraph newline = new Paragraph(new Text("\n"));
+                document.Add(newline);
+
+                string linetext = $"{dt.Columns[0].ColumnName}\t{dt.Columns[1].ColumnName}\t{dt.Columns[2].ColumnName}\t{dt.Columns[3].ColumnName}\t{dt.Columns[4].ColumnName}";
+                newline = new Paragraph(new Text(linetext));
+                document.Add(newline);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    LineSeparator ls = new LineSeparator(new SolidLine());
+                    document.Add(ls);
+
+                    linetext = $"{dt.Rows[i][0]}\t{dt.Rows[i][1]}\t{dt.Rows[i][2]}\t{dt.Rows[i][3]}\t{dt.Rows[i][4]}";
+                    newline = new Paragraph(new Text(linetext))
+                        .SetTextAlignment(TextAlignment.JUSTIFIED);
+                    document.Add(newline);
+                }
+                document.Close();
             }
-            document.Add(table);
-            document.Close();
+            catch { }
+        }
+
+        public static void ExportBookFormToPDF(DataTable dt, string filename, string[] data)
+        {
+            try
+            {
+                Document document = CreateDocument(filename);
+                Paragraph header = new Paragraph($"Формуляр книги - {data[1]} №{data[0]}")
+                   .SetTextAlignment(TextAlignment.CENTER)
+                   .SetFontSize(18);
+                document.Add(header);
+
+                Paragraph newline = new Paragraph(new Text("\n"));
+                document.Add(newline);
+
+                string linetext = $"{dt.Columns[0].ColumnName}\t{dt.Columns[1].ColumnName}\t{dt.Columns[2].ColumnName}\t{dt.Columns[3].ColumnName}";
+                newline = new Paragraph(new Text(linetext));
+                document.Add(newline);
+
+                newline = new Paragraph(new Text("\n"));
+                document.Add(newline);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    LineSeparator ls = new LineSeparator(new SolidLine());
+                    document.Add(ls);
+
+                    linetext = $"{dt.Rows[i][0]}\t{dt.Rows[i][1]}\t{dt.Rows[i][2]}\t{dt.Rows[i][3]}";
+                    newline = new Paragraph(new Text(linetext));
+                    document.Add(newline);
+                }
+                document.Close();
+            }
+            catch { }
+        }
+
+        private static Document CreateDocument(string path)
+        {
+            Document document = new Document(new PdfDocument(new PdfWriter(path)));
+            PdfFont font = PdfFontFactory.CreateFont(Properties.Resources.dinpro_bold, PdfEncodings.IDENTITY_H);
+            document.SetFont(font);
+            return document;
+        }
+
+        public static string GetFileName(string filename)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = filename;
+            saveFileDialog.DefaultExt = "pdf";
+            saveFileDialog.Filter = "PDF файлы (*.pdf)|*.pdf|Все файлы (*.*)|*.*";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                return saveFileDialog.FileName;
+            }
+            else return null;
         }
     }
 }

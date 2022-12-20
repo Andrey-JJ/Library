@@ -12,10 +12,13 @@ namespace Library
 {
     public partial class BookForm : Form
     {
-        public BookForm(DataTable dt)
+        public BookForm(DataTable dt, string[] data)
         {
             InitializeComponent();
             dGVBook.DataSource = dt;
+            this.Text = $"Формуляр книги {data[1]} №{data[0]}";
+            string filename = PDF_FormGenerator.GetFileName("ФормулярКниги_"+DateTime.Now);
+            PDF_FormGenerator.ExportBookFormToPDF(dt, filename, data);
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
