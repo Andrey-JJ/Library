@@ -160,7 +160,7 @@
     <Compile Include="LogsForm.Designer.cs">
       <DependentUpon>LogsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataBaseProcessing.cs" />
+    <Compile Include="DataBase_ProcessingRequest.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

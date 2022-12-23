@@ -25,7 +25,7 @@ namespace Library
             InitializeComponent();
             dGVBook.DataSource = dt;
             this.Text = $"Формуляр книги {data[1]} №{data[0]}";
-            string filename = PDF_FormGenerator.GetFileName("ФормулярКниги_"+DateTime.Now);
+            string filename = PDF_FormGenerator.GetFileName($"ФормулярКниги_{data[1]}_"+DateTime.Now.Date);
             PDF_FormGenerator.ExportBookFormToPDF(dt, filename, data);
         }
         /// <summary>

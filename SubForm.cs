@@ -25,7 +25,7 @@ namespace Library
             InitializeComponent();
             this.Text = $"Формуляр читателя - {s}";
             dGVSub.DataSource = dt;
-            string filename = PDF_FormGenerator.GetFileName("ФормулярЧитателя_" + DateTime.Now);
+            string filename = PDF_FormGenerator.GetFileName($"ФормулярЧитателя_{s}_" + DateTime.Now.Date);
             PDF_FormGenerator.ExportSubFormToPDF(dt, filename, s);
         }
         /// <summary>

@@ -13,6 +13,9 @@ using Npgsql;
 
 namespace Library
 {
+    /// <summary>
+    /// Класс основной формы программы
+    /// </summary>
     public partial class MainForm : Form
     {
         #region Start Work
@@ -21,7 +24,7 @@ namespace Library
             InitializeComponent();
             AfterLoadForm();
         }
-        public DataBaseProcessing dataBase; //Элемент класса для работы с базой данных
+        public DataBase_ProcessingRequest dataBase; //Элемент класса для работы с базой данных
         /// <summary>
         /// Метод начала работы с базой данных
         /// </summary>
@@ -29,7 +32,7 @@ namespace Library
         {
             GetTablesForTree();
             UserConnection user = new UserConnection("UserPig", "masterkey");
-            dataBase = new DataBaseProcessing(user.OpenConnection());
+            dataBase = new DataBase_ProcessingRequest(user.OpenConnection());
             try
             {
                 dataBase.Connection.Open();
@@ -54,7 +57,7 @@ namespace Library
             cBUp1.Items.Clear();
             cBDop1.Items.Clear();
             //Получение отделов
-            DataTable dt = DataBaseProcessing.SelectAllDeps(connection);
+            DataTable dt = DataBase_ProcessingRequest.SelectAllDeps(connection);
             if(dt.Rows.Count > 0)
             {
                 for(int i = 0; i < dt.Rows.Count; i++)
@@ -64,7 +67,7 @@ namespace Library
                 }
             }
             //Получение пользователей
-            dt = DataBaseProcessing.SelectAllSubscribers(connection);
+            dt = DataBase_ProcessingRequest.SelectAllSubscribers(connection);
             if (dt.Rows.Count > 0)
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
@@ -72,14 +75,14 @@ namespace Library
                     cBDop1.Items.Add(dt.Rows[i][0].ToString());
                 }
             //Получение библиотекарей
-            dt = DataBaseProcessing.SelectAllLibrarians(connection);
+            dt = DataBase_ProcessingRequest.SelectAllLibrarians(connection);
             if (dt.Rows.Count > 0)
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     cBIns3.Items.Add(dt.Rows[i][0].ToString());
                 }
             //Получение книг
-            dt = DataBaseProcessing.SelectAllBooks(connection);
+            dt = DataBase_ProcessingRequest.SelectAllBooks(connection);
             if (dt.Rows.Count > 0)
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
@@ -449,7 +452,7 @@ namespace Library
                     tBUp2.Text = DataBaseDGV.CurrentRow.Cells[1].Value.ToString();
                     tBUp3.Text = DataBaseDGV.CurrentRow.Cells[2].Value.ToString();
                     nUDUp1.Value = Int32.Parse(DataBaseDGV.CurrentRow.Cells[3].Value.ToString());
-                    cBUp1.SelectedIndex = DataBaseProcessing.GetDepId(DataBaseDGV.CurrentRow.Cells[4].Value.ToString(), dataBase.Connection);
+                    cBUp1.SelectedIndex = DataBase_ProcessingRequest.GetDepId(DataBaseDGV.CurrentRow.Cells[4].Value.ToString(), dataBase.Connection);
                     break;
                 case "Отдел":
                     tBUp1.Text = DataBaseDGV.CurrentRow.Cells[0].Value.ToString();
@@ -490,7 +493,7 @@ namespace Library
         /// <param name="s"> Переменная хранящая название таблицы, выбранной из древа </param>
         void SelectFromDB(string table)
         {
-            DataBaseDGV.DataSource = DataBaseProcessing.Select(table, dataBase.Connection);
+            DataBaseDGV.DataSource = DataBase_ProcessingRequest.Select(table, dataBase.Connection);
             InsertPage(table);
             UpdatePage(table);
             GetAllForComboBoxes(dataBase.Connection);
@@ -509,7 +512,7 @@ namespace Library
         /// <param name="id"> Переменная хранящая id выбранной строки</param>
         void GetImage(int id)
         {
-            DataTable dt = DataBaseProcessing.SelectImage(id, dataBase.Connection);
+            DataTable dt = DataBase_ProcessingRequest.SelectImage(id, dataBase.Connection);
             Image img = null;
             if(!Convert.IsDBNull(dt.Rows[0][0]))
             {
@@ -533,7 +536,7 @@ namespace Library
             if(DataBaseDGV.CurrentRow != null)
             {
                 int id = DataBaseDGV.CurrentRow.Index;
-                DataBaseProcessing.Delete(id, dataBase.Table, dataBase.Connection);
+                DataBase_ProcessingRequest.Delete(id, dataBase.Table, dataBase.Connection);
                 SelectFromDB(dataBase.Table);
             }
         }
@@ -551,7 +554,7 @@ namespace Library
             data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
             data[2] = $"{cBIns1.SelectedIndex};{cBIns2.SelectedIndex};{cBIns3.SelectedIndex};{cBIns4.SelectedIndex}";
             data[3] = $"{dtPIns1.Value.Date};{dtPIns2.Value.Date}";
-            DataBaseProcessing.Insert(dataBase.Table, data, dataBase.Connection);
+            DataBase_ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
             SelectFromDB(dataBase.Table);
         }
         /// <summary>
@@ -563,7 +566,7 @@ namespace Library
         {
             int id = DataBaseDGV.CurrentRow.Index;
             byte[] img = LoadPhotoToArray();
-            DataBaseProcessing.UpdateImg(id, img, dataBase.Connection);
+            DataBase_ProcessingRequest.UpdateImg(id, img, dataBase.Connection);
         }
         #endregion
         #region Update
@@ -580,7 +583,7 @@ namespace Library
             data[1] = $"{Int32.Parse(nUDUp1.Value.ToString())};{Int32.Parse(nUDUp2.Value.ToString())}";
             data[2] = $"{cBUp1.SelectedIndex}";
             data[3] = $"{dtPUp1.Value.Date};{dtPUp1.Value.Date}";
-            DataBaseProcessing.Update(dataBase.Table, id, data, dataBase.Connection);
+            DataBase_ProcessingRequest.Update(dataBase.Table, id, data, dataBase.Connection);
         }
         #endregion
         #region Dop methods
@@ -625,7 +628,7 @@ namespace Library
         private void btnSubInfo_Click(object sender, EventArgs e)
         {
             int id = cBDop1.SelectedIndex;
-            DataTable dt = DataBaseProcessing.SubFormTable(id, dataBase.Connection);
+            DataTable dt = DataBase_ProcessingRequest.SubFormTable(id, dataBase.Connection);
             string s = cBDop1.SelectedItem.ToString();
             Form f = new SubForm(dt, s);
             f.Show();
@@ -639,7 +642,7 @@ namespace Library
         private void btnBookInfo_Click(object sender, EventArgs e)
         {
             int id = DataBaseDGV.CurrentRow.Index;
-            DataTable dt = DataBaseProcessing.BookFormTable(id, dataBase.Connection);
+            DataTable dt = DataBase_ProcessingRequest.BookFormTable(id, dataBase.Connection);
             string[] data = new string[] { $"{id}", $"{DataBaseDGV.CurrentCell.Value}" };
             Form f = new BookForm(dt, data);
             f.Show();

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
+    /// <summary>
+    /// Класс подключения пользователя к базе данных
+    /// </summary>
     internal class UserConnection
     {
         public string UserId { get; set; } //Идентификатор пользователя базы данных

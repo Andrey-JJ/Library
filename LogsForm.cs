@@ -20,7 +20,7 @@ namespace Library
         }
         void GetLogs(NpgsqlConnection connection)
         {
-            DataTable dt = DataBaseProcessing.SelectLogs(connection);
+            DataTable dt = DataBase_ProcessingRequest.SelectLogs(connection);
             dataGridView1.DataSource = dt;
         }
         private void button1_Click(object sender, EventArgs e)

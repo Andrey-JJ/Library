@@ -41,20 +41,22 @@ namespace Library
                 Paragraph newline = new Paragraph(new Text("\n"));
                 document.Add(newline);
 
-                string linetext = $"{dt.Columns[0].ColumnName}\t{dt.Columns[1].ColumnName}\t{dt.Columns[2].ColumnName}\t{dt.Columns[3].ColumnName}\t{dt.Columns[4].ColumnName}";
-                newline = new Paragraph(new Text(linetext));
-                document.Add(newline);
+                Table table = new Table(5);
+                table.AddCell(new Paragraph(new Text(dt.Columns[0].ColumnName)));
+                table.AddCell(new Paragraph(new Text(dt.Columns[1].ColumnName)));
+                table.AddCell(new Paragraph(new Text(dt.Columns[2].ColumnName)));
+                table.AddCell(new Paragraph(new Text(dt.Columns[3].ColumnName)));
+                table.AddCell(new Paragraph(new Text(dt.Columns[4].ColumnName)));
 
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    LineSeparator ls = new LineSeparator(new SolidLine());
-                    document.Add(ls);
-
-                    linetext = $"{dt.Rows[i][0]}\t{dt.Rows[i][1]}\t{dt.Rows[i][2]}\t{dt.Rows[i][3]}\t{dt.Rows[i][4]}";
-                    newline = new Paragraph(new Text(linetext))
-                        .SetTextAlignment(TextAlignment.JUSTIFIED);
-                    document.Add(newline);
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][0].ToString())));
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][1].ToString())));
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][2].ToString())));
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][3].ToString())));
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][4].ToString())));
                 }
+                document.Add(table);
                 document.Close();
             }
             catch { }
@@ -78,22 +80,20 @@ namespace Library
                 Paragraph newline = new Paragraph(new Text("\n"));
                 document.Add(newline);
 
-                string linetext = $"{dt.Columns[0].ColumnName}\t{dt.Columns[1].ColumnName}\t{dt.Columns[2].ColumnName}\t{dt.Columns[3].ColumnName}";
-                newline = new Paragraph(new Text(linetext));
-                document.Add(newline);
-
-                newline = new Paragraph(new Text("\n"));
-                document.Add(newline);
+                Table table = new Table(5);
+                table.AddCell(new Paragraph(new Text(dt.Columns[0].ColumnName)));
+                table.AddCell(new Paragraph(new Text(dt.Columns[1].ColumnName)));
+                table.AddCell(new Paragraph(new Text(dt.Columns[2].ColumnName)));
+                table.AddCell(new Paragraph(new Text(dt.Columns[3].ColumnName)));
 
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    LineSeparator ls = new LineSeparator(new SolidLine());
-                    document.Add(ls);
-
-                    linetext = $"{dt.Rows[i][0]}\t{dt.Rows[i][1]}\t{dt.Rows[i][2]}\t{dt.Rows[i][3]}";
-                    newline = new Paragraph(new Text(linetext));
-                    document.Add(newline);
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][0].ToString())));
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][1].ToString())));
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][2].ToString())));
+                    table.AddCell(new Paragraph(new Text(dt.Rows[i][3].ToString())));
                 }
+                document.Add(table);
                 document.Close();
             }
             catch { }

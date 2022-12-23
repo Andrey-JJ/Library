@@ -9,7 +9,10 @@ using System.Windows.Forms;
 
 namespace Library
 {
-    public class DataBaseProcessing
+    /// <summary>
+    /// Класс обработки запросов к базе данных
+    /// </summary>
+    public class DataBase_ProcessingRequest
     {
         string ConnectionToDB { get; } //Строка подключения к базе данных
         public NpgsqlConnection Connection { get; } //Переменная для подключение к базе данных
@@ -18,7 +21,7 @@ namespace Library
         /// Конструктор класса работы с базой данных
         /// </summary>
         /// <param name="conn"> Переменная хранящая строку подключения к базе данных </param>
-        public DataBaseProcessing(string conn) 
+        public DataBase_ProcessingRequest(string conn) 
         {
             this.ConnectionToDB = conn;
             Connection = new NpgsqlConnection(conn);
