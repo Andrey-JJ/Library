@@ -56,10 +56,10 @@ namespace Library
                     temp = "select id as \"Номер отдела\", dep_name as \"Название отдела\" from department order by department.id";
                     break;
                 case "Абонент":
-                    temp = "select sub_lastname as \"Фамилия\", sub_name as \"Имя\", sub_midname as \"Отчество\" from subscriber order by sub_lastname";
+                    temp = "select sub_lastname as \"Фамилия\", sub_name as \"Имя\", sub_midname as \"Отчество\" from subscriber order by id";
                     break;
                 case "Библиотекарь":
-                    temp = "select lib_lastname as \"Фамилия\", lib_name as \"Имя\", lib_midname as \"Отчество\" from librarian order by lib_lastname";
+                    temp = "select lib_lastname as \"Фамилия\", lib_name as \"Имя\", lib_midname as \"Отчество\" from librarian order by id";
                     break;
             }
             return temp;

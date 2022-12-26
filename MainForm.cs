@@ -55,7 +55,6 @@ namespace Library
             cBIns3.Items.Clear();
             cBIns4.Items.Clear();
             cBUp1.Items.Clear();
-            cBDop1.Items.Clear();
             //Получение отделов
             DataTable dt = DataBase_ProcessingRequest.SelectAllDeps(connection);
             if(dt.Rows.Count > 0)
@@ -72,7 +71,6 @@ namespace Library
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     cBIns2.Items.Add(dt.Rows[i][0].ToString());
-                    cBDop1.Items.Add(dt.Rows[i][0].ToString());
                 }
             //Получение библиотекарей
             dt = DataBase_ProcessingRequest.SelectAllLibrarians(connection);
@@ -553,9 +551,20 @@ namespace Library
             data[0] = $"{tBIns1.Text};{tBIns2.Text};{tBIns3.Text}";
             data[1] = $"{Int32.Parse(nUDIns1.Value.ToString())};{Int32.Parse(nUDIns2.Value.ToString())}";
             data[2] = $"{cBIns1.SelectedIndex};{cBIns2.SelectedIndex};{cBIns3.SelectedIndex};{cBIns4.SelectedIndex}";
-            data[3] = $"{dtPIns1.Value.Date};{dtPIns2.Value.Date}";
-            DataBase_ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
-            SelectFromDB(dataBase.Table);
+            if (dataBase.Table == "Выдача")
+            {
+                if (dtPIns1.Value.Date <= dtPIns2.Value.Date)
+                {
+                    data[3] = $"{dtPIns1.Value.Date};{dtPIns2.Value.Date}";
+                    DataBase_ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
+                }
+                else MessageBox.Show("Неверно указаны даты", "Ошибка", MessageBoxButtons.OK);
+            }
+            else
+            {
+                DataBase_ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
+                SelectFromDB(dataBase.Table);
+            }
         }
         /// <summary>
         /// Обработчик кнопки добавления изображения
@@ -582,8 +591,20 @@ namespace Library
             data[0] = $"{tBUp1.Text};{tBUp2.Text};{tBUp3.Text}";
             data[1] = $"{Int32.Parse(nUDUp1.Value.ToString())};{Int32.Parse(nUDUp2.Value.ToString())}";
             data[2] = $"{cBUp1.SelectedIndex}";
-            data[3] = $"{dtPUp1.Value.Date};{dtPUp1.Value.Date}";
-            DataBase_ProcessingRequest.Update(dataBase.Table, id, data, dataBase.Connection);
+            if(dataBase.Table == "Выдача")
+            {
+                if (dtPUp1.Value.Date <= dtPUp2.Value.Date)
+                {
+                    data[3] = $"{dtPUp1.Value.Date};{dtPUp2.Value.Date}";
+                    DataBase_ProcessingRequest.Update(dataBase.Table, id, data, dataBase.Connection);
+                }
+                else MessageBox.Show("Неверно указаны даты", "Ошибка", MessageBoxButtons.OK);
+            }
+            else
+            {
+                DataBase_ProcessingRequest.Update(dataBase.Table, id, data, dataBase.Connection);
+                SelectFromDB(dataBase.Table);
+            }
         }
         #endregion
         #region Dop methods
@@ -627,12 +648,14 @@ namespace Library
         /// <param name="e"></param>
         private void btnSubInfo_Click(object sender, EventArgs e)
         {
-            int id = cBDop1.SelectedIndex;
-            DataTable dt = DataBase_ProcessingRequest.SubFormTable(id, dataBase.Connection);
-            string s = cBDop1.SelectedItem.ToString();
-            Form f = new SubForm(dt, s);
-            f.Show();
-            
+            if(dataBase.Table == "Абонент")
+            {
+                int id = DataBaseDGV.CurrentRow.Index;
+                DataTable dt = DataBase_ProcessingRequest.SubFormTable(id, dataBase.Connection);
+                string s = $"{DataBaseDGV[0,id].Value} {DataBaseDGV[1,id].Value} {DataBaseDGV[2,id].Value}";
+                Form f = new SubForm(dt, s);
+                f.Show();
+            }
         }
         /// <summary>
         /// Обработчик кнопки для создания формуляра книги
@@ -641,11 +664,14 @@ namespace Library
         /// <param name="e"></param>
         private void btnBookInfo_Click(object sender, EventArgs e)
         {
-            int id = DataBaseDGV.CurrentRow.Index;
-            DataTable dt = DataBase_ProcessingRequest.BookFormTable(id, dataBase.Connection);
-            string[] data = new string[] { $"{id}", $"{DataBaseDGV.CurrentCell.Value}" };
-            Form f = new BookForm(dt, data);
-            f.Show();
+            if(dataBase.Table == "Экземпляр книги")
+            {
+                int id = DataBaseDGV.CurrentRow.Index;
+                DataTable dt = DataBase_ProcessingRequest.BookFormTable(id, dataBase.Connection);
+                string[] data = new string[] { $"{id}", $"{DataBaseDGV.CurrentCell.Value}" };
+                Form f = new BookForm(dt, data);
+                f.Show();
+            }
         }
         #endregion
     }
