@@ -202,28 +202,32 @@ namespace Library
         /// <param name="connection"> Переменная подключения к базе данных </param>
         public static void Delete(int id, string tableinfo, NpgsqlConnection connection) 
         {
-            bool flag = false;
             string commandText = "";
             switch (tableinfo)
             {
                 case "Экземпляр книги":
-                    commandText = $"delete from book where id = {id}";
-                    MessageBox.Show($"Внимание будет списана книга, которая может находиться в выдаче! \nНомер книги {id}", "Предупреждение", MessageBoxButtons.OK);
+                    if(MessageBox.Show($"Внимание будет списана книга, которая может находиться в выдаче! \nНомер книги {id}", "Предупреждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        commandText = $"delete from book where id = {id}";
                     break;
                 case "Каталожная карточка книги":
-                    commandText = $"delete from card where id = {id}";
+                    if (MessageBox.Show($"Внимание будет списана каталожная карточка, которая может иметь несколько книг! \nНомер карточки {id}", "Предупреждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        commandText = $"delete from card where id = {id}";
                     break;
                 case "Выдача":
-                    commandText = $"delete from book_issue where id = {id}";
+                    if(MessageBox.Show($"Внимание будет удалена информация о выдаче книги читателю! \nНомер выдачи {id}", "Предупреждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        commandText = $"delete from book_issue where id = {id}";
                     break;
                 case "Отдел":
-                    commandText = $"delete from department where id = {id}";
+                    if(MessageBox.Show($"Внимание будет удален отдел библиотеки! В нем могут находиться книги. \nНомер отдела {id}", "Предупреждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        commandText = $"delete from department where id = {id}";
                     break;
                 case "Абонент":
-                    commandText = $"delete from subscriber where id = {id}";
+                    if(MessageBox.Show($"Внимание будет удален абонент/читатель библиотеки! Пожалуйста проверьте, он может быть связан с одной из выдач. \nНомер абонента/читателя {id}", "Предупреждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        commandText = $"delete from subscriber where id = {id}";
                     break;
                 case "Библиотекарь":
-                    commandText = $"delete from librarian where id = {id}";
+                    if (MessageBox.Show($"Внимание будет удален библиотекарь библиотеки! Пожалуйста проверьте, он может быть связан с одной из выдач. \nНомер библиотекаря {id}", "Предупреждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        commandText = $"delete from librarian where id = {id}";
                     break;
             }
             try

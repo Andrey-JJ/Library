@@ -102,7 +102,7 @@ namespace Library
         /// Метод создания документа по выбранному пути
         /// </summary>
         /// <param name="path"></param>
-        /// <returns></returns>
+        /// <returns> Возвращает переменную типа Document для внесения данных </returns>
         private static Document CreateDocument(string path)
         {
             Document document = new Document(new PdfDocument(new PdfWriter(path)));
@@ -114,7 +114,7 @@ namespace Library
         /// Метод выбора пути сохранения файла
         /// </summary>
         /// <param name="filename"></param>
-        /// <returns></returns>
+        /// <returns> Возвращает строку с именем файла для сохранения </returns>
         public static string GetFileName(string filename)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
