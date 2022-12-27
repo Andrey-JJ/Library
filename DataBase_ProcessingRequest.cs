@@ -235,7 +235,7 @@ namespace Library
                 NpgsqlCommand command = new NpgsqlCommand(commandText, connection);
                 command.ExecuteNonQuery();
             }
-            catch { }
+            catch { MessageBox.Show("Ошибка\n\nНевозможно удалить данные по указаному идентификатору!"); }
         }
         #endregion
         #region Insert functions
@@ -250,11 +250,11 @@ namespace Library
             string[] textboxes = data[0].Split(';');
             string[] numerics = data[1].Split(';');
             string[] comboboxes = data[2].Split(';');
-            string[] datepickers = data[3].Split(';');
             string book = comboboxes[0] + ";" + numerics[1];
             if (table == "Экземпляр книги") Insert_book(book, connection);
             else if (table == "Выдача")
             {
+                string[] datepickers = data[3].Split(';');
                 int bookid = GetBookId(Int32.Parse(comboboxes[0]), connection);
                 int subid = Int32.Parse(comboboxes[1]);
                 int libid = Int32.Parse(comboboxes[2]);
@@ -331,8 +331,10 @@ namespace Library
                         command.ExecuteNonQuery();
                     }
                 }
-                catch { } //MessageBox.Show($"Не возможно добавить значения в таблицы из-за указаных вами данных.");
-            }
+                catch
+                { 
+                    MessageBox.Show($"Не возможно добавить значения в таблицу из-за указаных вами данных."); } 
+                }
             else MessageBox.Show("Внимание!\nНевозможно добавить книги, если указанное кол-во равно или меньше 0.");
         }
         #endregion
@@ -363,7 +365,7 @@ namespace Library
         /// <param name="id"> Переменная хранящая id выбранной записи</param>
         /// <param name="data"> Массив хранящий данные для обновления записи</param>
         /// <param name="connection"> Переменная хранящая подключение к базе данных </param>
-        public static void Update(string table, int id, string[] data, NpgsqlConnection connection)
+        public static void Update(string table, int id, string[] data, bool tf, NpgsqlConnection connection)
         {
             string commandText = "";
             string[] textboxes = data[0].Split(';');
@@ -371,6 +373,9 @@ namespace Library
             int comboboxes = Int32.Parse(data[2]);
             switch (table)
             {
+                case "Экземпляр книги":
+                    commandText = $"update book set book_sub '{tf}' where book.id = '{id}'";
+                    break;
                 case "Каталожная карточка книги":
                     commandText = $"update card set book_name = '{textboxes[0]}', book_edit = '{textboxes[1]}', book_author = '{textboxes[2]}', book_vol = '{Int32.Parse(numerics[0])}', dep_id = '{comboboxes}' where card.id = '{id}'";
                     break;

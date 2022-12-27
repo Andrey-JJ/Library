@@ -553,7 +553,7 @@ namespace Library
             data[2] = $"{cBIns1.SelectedIndex};{cBIns2.SelectedIndex};{cBIns3.SelectedIndex};{cBIns4.SelectedIndex}";
             if (dataBase.Table == "Выдача")
             {
-                if (dtPIns1.Value.Date <= dtPIns2.Value.Date)
+                if (dtPIns1.Value.Date < dtPIns2.Value.Date)
                 {
                     data[3] = $"{dtPIns1.Value.Date};{dtPIns2.Value.Date}";
                     DataBase_ProcessingRequest.Insert(dataBase.Table, data, dataBase.Connection);
@@ -591,18 +591,19 @@ namespace Library
             data[0] = $"{tBUp1.Text};{tBUp2.Text};{tBUp3.Text}";
             data[1] = $"{Int32.Parse(nUDUp1.Value.ToString())};{Int32.Parse(nUDUp2.Value.ToString())}";
             data[2] = $"{cBUp1.SelectedIndex}";
-            if(dataBase.Table == "Выдача")
+            bool tf = chBUp1.Checked;
+            if (dataBase.Table == "Выдача")
             {
-                if (dtPUp1.Value.Date <= dtPUp2.Value.Date)
+                if (dtPUp1.Value.Date < dtPUp2.Value.Date)
                 {
                     data[3] = $"{dtPUp1.Value.Date};{dtPUp2.Value.Date}";
-                    DataBase_ProcessingRequest.Update(dataBase.Table, id, data, dataBase.Connection);
+                    DataBase_ProcessingRequest.Update(dataBase.Table, id, data, tf, dataBase.Connection);
                 }
                 else MessageBox.Show("Неверно указаны даты", "Ошибка", MessageBoxButtons.OK);
             }
             else
             {
-                DataBase_ProcessingRequest.Update(dataBase.Table, id, data, dataBase.Connection);
+                DataBase_ProcessingRequest.Update(dataBase.Table, id, data, tf, dataBase.Connection);
                 SelectFromDB(dataBase.Table);
             }
         }
