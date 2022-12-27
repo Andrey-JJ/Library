@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Library.BookForm">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAQAAAAIIAAAAAAAA=</HashCode>
+      <FileName>BookForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.LogsForm">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAGAAAACAAgIAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>LogsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MainForm">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BACYBoAdBCgdCBCwgQDWwBISAEEQWgAAkOIgAABAQfQ=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.SubForm">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAQAAAAIAAAAAAAAg=</HashCode>
+      <FileName>SubForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.UserConnection">
+    <Position X="2" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAQAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>UserConnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.PDF_FormGenerator">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAABAAAAAAAAAAAAQAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>PDF_FormGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.DataBase_ProcessingRequest">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQQEACAABAAIEEBACAQAAQAAEAQAAAAIEAQAAAEAA=</HashCode>
+      <FileName>DataBase_ProcessingRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
